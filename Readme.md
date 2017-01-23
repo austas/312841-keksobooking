@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url] [![Dependency status][dependency-image]][dependency-url]
 
 * Студент: [Артем Юстелис](https://up.htmlacademy.ru/javascript/8/user/312841).
-* Наставник: `Неизвестно`.
+* Наставник: [Игорь Шевченко](https://htmlacademy.ru/profile/id149304).
 
 ---
 
