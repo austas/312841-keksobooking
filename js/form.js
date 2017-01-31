@@ -14,10 +14,12 @@ function selectPin(pin) {
   pin.classList.add('pin--active');
 }
 
+function clickOnPin() {
+  deletePin();
+  selectPin(event.currentTarget);
+  dialogMain.style.display = 'block';
+}
+
 for (var i = 0; i < pinMap.length; i++) {
-  pinMap[i].addEventListener('click', function () {
-    deletePin();
-    selectPin(event.currentTarget);
-    dialogMain.style.display = 'block';
-  });
+  pinMap[i].addEventListener('click', clickOnPin);
 }
