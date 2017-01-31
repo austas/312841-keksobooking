@@ -2,24 +2,27 @@
 
 var pinMap = document.querySelectorAll('.pin');
 var dialogMain = document.querySelector('.dialog');
+var dialogClose = dialogMain.querySelector('.dialog__close');
 
-function deletePin() {
-  var pinActive = document.querySelector('.pin--active');
-  if (pinActive) {
-    pinActive.classList.remove('pin--active');
-  }
-}
-
-function selectPin(pin) {
-  pin.classList.add('pin--active');
-}
-
-function clickOnPin() {
+function selectPin() {
   deletePin();
-  selectPin(event.currentTarget);
+  this.classList.add('pin--active');
   dialogMain.style.display = 'block';
 }
 
-for (var i = 0; i < pinMap.length; i++) {
-  pinMap[i].addEventListener('click', clickOnPin);
+function deletePin() {
+  for (var i = 0; i < pinMap.length; i++) {
+    pinMap[i].classList.remove('pin--active');
+  }
 }
+
+function letDialogClose() {
+  dialogMain.style.display = 'none';
+  deletePin();
+}
+
+for (var i = 0; i < pinMap.length; i++) {
+  pinMap[i].addEventListener('click', selectPin);
+}
+
+dialogClose.addEventListener('click', letDialogClose);
