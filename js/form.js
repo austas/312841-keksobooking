@@ -3,6 +3,16 @@
 var pinMap = document.querySelectorAll('.pin');
 var dialogMain = document.querySelector('.dialog');
 var dialogClose = dialogMain.querySelector('.dialog__close');
+var noticeForm = document.querySelector('.notice__form');
+var noticeTitle = noticeForm.querySelector('#title');
+var noticePrice = noticeForm.querySelector('#price');
+
+noticeTitle.required = true;
+noticeTitle.minLength = '30';
+noticeTitle.maxLength = '100';
+
+noticePrice.required = true;
+noticePrice.type.value = 'number';
 
 function selectPin() {
   deletePin();
