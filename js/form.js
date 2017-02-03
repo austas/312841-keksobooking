@@ -6,13 +6,18 @@ var dialogClose = dialogMain.querySelector('.dialog__close');
 var noticeForm = document.querySelector('.notice__form');
 var noticeTitle = noticeForm.querySelector('#title');
 var noticePrice = noticeForm.querySelector('#price');
+var noticeAddress = noticeForm.querySelector('#address');
 
 noticeTitle.required = true;
 noticeTitle.minLength = '30';
 noticeTitle.maxLength = '100';
 
 noticePrice.required = true;
-noticePrice.type.value = 'number';
+noticePrice.type = 'number';
+noticePrice.setAttribute('min', '1000');
+noticePrice.setAttribute('max', '1000000');
+
+noticeAddress.required = true;
 
 function selectPin() {
   deletePin();
