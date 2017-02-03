@@ -7,6 +7,7 @@ var noticeForm = document.querySelector('.notice__form');
 var noticeTitle = noticeForm.querySelector('#title');
 var noticePrice = noticeForm.querySelector('#price');
 var noticeAddress = noticeForm.querySelector('#address');
+// var selector = noticeForm.querySelectorAll('option');
 
 noticeTitle.required = true;
 noticeTitle.minLength = '30';
@@ -18,6 +19,20 @@ noticePrice.setAttribute('min', '1000');
 noticePrice.setAttribute('max', '1000000');
 
 noticeAddress.required = true;
+
+var selectType = noticeForm.querySelector('#type');
+var typeOptions = selectType.querySelectorAll('option');
+
+function getSelectedOption() {
+  for (var i = 0; i < typeOptions.length; i++) {
+    var optionType = typeOptions[i];
+    if (optionType.selected) {
+      console.log(optionType.value);
+    }
+  }
+}
+
+noticeForm.addEventListener('change', getSelectedOption);
 
 function selectPin() {
   deletePin();
