@@ -37,6 +37,7 @@ noticePrice.setAttribute('min', '1000');
 noticePrice.setAttribute('max', '1000000');
 
 noticeAddress.required = true;
+selectedCapacity.value = 'not_for_guests'; // Так как по умолчанию выбрана 1 комната, ставлю синх ей элемент на старте
 
 function selectPin() {
   deletePin();
