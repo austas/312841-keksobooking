@@ -50,18 +50,14 @@ function syncSelectedElements(selectedOption) {
   selectedOption = selectedOption.options[selectedOption.selectedIndex].value;
   if (selectedOption === 'flat') {
     noticePrice.setAttribute('min', '1000');
-  }
-  if (selectedOption === 'shack') {
+  } else if (selectedOption === 'shack') {
     noticePrice.setAttribute('min', '0');
-  }
-  if (selectedOption === 'palace') {
+  } else if (selectedOption === 'palace') {
     noticePrice.setAttribute('min', '10000');
-  }
-  if (selectedOption === 'hundred_rooms' || 'two_rooms') {
-    selectedCapacity.value = 'for_three_guests';
-  }
-  if (selectedOption === 'one_room') {
+  } else if (selectedOption === 'one_room') {
     selectedCapacity.value = 'not_for_guests';
+  } else if (selectedOption === 'hundred_rooms' || 'two_rooms') {
+    selectedCapacity.value = 'for_three_guests';
   }
 }
 
