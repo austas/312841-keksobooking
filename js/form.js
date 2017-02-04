@@ -1,6 +1,7 @@
 'use strict';
 
 var pinMap = document.querySelectorAll('.pin');
+var activePin = document.querySelector('.pin--active');
 var dialogMain = document.querySelector('.dialog');
 var dialogClose = dialogMain.querySelector('.dialog__close');
 var noticeForm = document.querySelector('.notice__form');
@@ -34,7 +35,9 @@ function selectPin() {
 
 function deletePin() {
   for (var i = 0; i < pinMap.length; i++) {
-    pinMap[i].classList.remove('pin--active');
+    if (activePin) {
+      pinMap[i].classList.remove('pin--active');
+    }
   }
 }
 
