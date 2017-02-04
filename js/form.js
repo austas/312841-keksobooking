@@ -39,9 +39,9 @@ noticePrice.setAttribute('max', '1000000');
 noticeAddress.required = true;
 selectedCapacity.value = 'not_for_guests'; // Так как по умолчанию выбрана 1 комната, ставлю синх ей элемент на старте
 
-function selectPin() {
+function selectPin(e) {
   deletePin();
-  this.classList.add('pin--active');
+  e.currentTarget.classList.add('pin--active');
   dialogMain.style.display = 'block';
 }
 
@@ -88,8 +88,8 @@ selectedRoomNumbers.addEventListener('change', function () {
   syncSelectedElements(selectedRoomNumbers);
 });
 
-selectedTimeIn.addEventListener('change', function () {
+selectedTimeIn.addEventListener('change', function (e) {
   for (i = 0; i < selectedTimeIn.length; i++) {
-    selectedTimeOut.selectedIndex = this.selectedIndex;
+    selectedTimeOut.selectedIndex = e.currentTarget.selectedIndex;
   }
 });
