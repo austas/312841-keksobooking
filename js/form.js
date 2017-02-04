@@ -8,13 +8,24 @@ var noticeForm = document.querySelector('.notice__form');
 var noticeTitle = noticeForm.querySelector('#title');
 var noticePrice = noticeForm.querySelector('#price');
 var noticeAddress = noticeForm.querySelector('#address');
+var noticeHouseType = noticeForm.querySelector('#type');
+var noticeRoomNumbers = noticeForm.querySelector('#room_number');
+var noticeCapacity = noticeForm.querySelector('#capacity');
+var noticeTime = noticeForm.querySelector('#time');
+var noticeTimeOut = noticeForm.querySelector('#timeout');
 
-var noticeUserForm = document.forms[1];
-var selectedHouseType = noticeUserForm.elements[1];
-var selectedRoomNumbers = noticeUserForm.elements[3];
-var selectedCapacity = noticeUserForm.elements[4];
-var selectedTimeIn = noticeUserForm.elements[7];
-var selectedTimeOut = noticeUserForm.elements[8];
+noticeForm.setAttribute('name', 'noticeForm');
+noticeHouseType.setAttribute('name', 'type');
+noticeRoomNumbers.setAttribute('name', 'roomNumber');
+noticeCapacity.setAttribute('name', 'capacity');
+noticeTime.setAttribute('name', 'timeIn');
+noticeTimeOut.setAttribute('name', 'timeOut');
+
+var selectedHouseType = noticeForm.elements.type;
+var selectedRoomNumbers = noticeForm.elements.roomNumber;
+var selectedCapacity = noticeForm.elements.capacity;
+var selectedTimeIn = noticeForm.elements.timeIn;
+var selectedTimeOut = noticeForm.elements.timeOut;
 
 noticeTitle.required = true;
 noticeTitle.minLength = '30';
