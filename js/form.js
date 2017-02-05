@@ -1,6 +1,7 @@
 'use strict';
 
 var pinMap = document.querySelectorAll('.pin');
+var activePin = document.querySelector('.pin--active');
 var dialogMain = document.querySelector('.dialog');
 var dialogClose = dialogMain.querySelector('.dialog__close');
 var noticeForm = document.querySelector('.notice__form');
@@ -38,18 +39,48 @@ noticePrice.setAttribute('max', '1000000');
 noticeAddress.required = true;
 selectedCapacity.value = 'not_for_guests'; // Так как по умолчанию выбрана 1 комната, ставлю синх ей элемент на старте
 
+function setupARIA(element, atribute1, atribute2) {
+  element.setAttribute(atribute1, atribute2);
+}
+
+for (var i = 0; i < pinMap.length; i++) {
+  setupARIA(pinMap[i], 'role', 'tab');
+  setupARIA(pinMap[i], 'aria-selected', 'false');
+  setupARIA(pinMap[i], 'tabindex', '1');
+}
+
+setupARIA(dialogMain, 'role', 'tabpanel');
+setupARIA(dialogMain, 'aria-hidden', 'false');
+
+setupARIA(dialogClose, 'role', 'button');
+setupARIA(dialogClose, 'aria-pressed', 'false');
+setupARIA(dialogClose, 'tabindex', '1');
+
+if (activePin) {
+  setupARIA(activePin, 'aria-selected', 'true');
+}
+
 function selectPin(e) {
   deleteActivePin();
   e.currentTarget.classList.add('pin--active');
+  setupARIA(e.currentTarget, 'aria-selected', 'true');
   dialogMain.style.display = 'block';
+  setupARIA(dialogMain, 'aria-hidden', 'false');
 }
 
 function deleteActivePin() {
-  var activePin = document.querySelector('.pin--active');
+  activePin = document.querySelector('.pin--active');
   if (activePin) {
     activePin.classList.remove('pin--active');
+    setupARIA(activePin, 'aria-selected', 'false');
     dialogMain.style.display = 'none';
   }
+}
+
+function letDialogClose() {
+  dialogMain.style.display = 'none';
+  setupARIA(dialogMain, 'aria-hidden', 'true');
+  deleteActivePin();
 }
 
 function syncSelectedElements(selectedOption) {
@@ -77,7 +108,7 @@ function syncSelectedElements(selectedOption) {
   }
 }
 
-for (var i = 0; i < pinMap.length; i++) {
+for (i = 0; i < pinMap.length; i++) {
   pinMap[i].addEventListener('click', selectPin);
 }
 
