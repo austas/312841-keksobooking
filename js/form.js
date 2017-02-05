@@ -27,6 +27,9 @@ var selectedCapacity = noticeForm.elements.capacity;
 var selectedTimeIn = noticeForm.elements.timeIn;
 var selectedTimeOut = noticeForm.elements.timeOut;
 
+var ENTER_KEY_CODE = 13;
+var ESCAPE_KEY_CODE = 27;
+
 noticeTitle.required = true;
 noticeTitle.minLength = '30';
 noticeTitle.maxLength = '100';
@@ -60,12 +63,23 @@ if (activePin) {
   setupARIA(activePin, 'aria-selected', 'true');
 }
 
+function isActivateEvent(e) {
+  return e.keyCode && e.keyCode === ENTER_KEY_CODE;
+}
+
+function dialogMainKeydownHandler(e) {
+  if (e.keyCode === ESCAPE_KEY_CODE) {
+    letDialogClose();
+  }
+}
+
 function selectPin(e) {
   deleteActivePin();
   e.currentTarget.classList.add('pin--active');
   setupARIA(e.currentTarget, 'aria-selected', 'true');
   dialogMain.style.display = 'block';
   setupARIA(dialogMain, 'aria-hidden', 'false');
+  dialogMain.addEventListener('keydown', dialogMainKeydownHandler);
 }
 
 function deleteActivePin() {
@@ -80,6 +94,7 @@ function deleteActivePin() {
 function letDialogClose() {
   dialogMain.style.display = 'none';
   setupARIA(dialogMain, 'aria-hidden', 'true');
+  dialogMain.removeEventListener('keydown', dialogMainKeydownHandler);
   deleteActivePin();
 }
 
@@ -110,9 +125,19 @@ function syncSelectedElements(selectedOption) {
 
 for (i = 0; i < pinMap.length; i++) {
   pinMap[i].addEventListener('click', selectPin);
+  pinMap[i].addEventListener('keydown', function (e) {
+    if (isActivateEvent(e)) {
+      selectPin(e);
+    }
+  });
 }
 
-dialogClose.addEventListener('click', deleteActivePin);
+dialogClose.addEventListener('click', letDialogClose);
+dialogClose.addEventListener('keydown', function (e) {
+  if (isActivateEvent(e)) {
+    letDialogClose();
+  }
+});
 
 
 selectedHouseType.addEventListener('change', function () {
