@@ -79,6 +79,7 @@ function selectPin(e) {
   setupARIA(e.currentTarget, 'aria-selected', 'true');
   dialogMain.style.display = 'block';
   setupARIA(dialogMain, 'aria-hidden', 'false');
+  setupARIA(dialogClose, 'aria-pressed', 'false');
   dialogMain.addEventListener('keydown', dialogMainKeydownHandler);
 }
 
@@ -94,6 +95,7 @@ function deleteActivePin() {
 function letDialogClose() {
   dialogMain.style.display = 'none';
   setupARIA(dialogMain, 'aria-hidden', 'true');
+  setupARIA(dialogClose, 'aria-pressed', 'true');
   dialogMain.removeEventListener('keydown', dialogMainKeydownHandler);
   deleteActivePin();
 }
