@@ -1,7 +1,8 @@
 'use strict';
 
-var pinMap = document.querySelectorAll('.pin');
-var activePin = document.querySelector('.pin--active');
+var tokyoPinMap = document.querySelector('.tokyo__pin-map');
+var pinMap = tokyoPinMap.querySelectorAll('.pin');
+var activePin = tokyoPinMap.querySelector('.pin--active');
 var dialogMain = document.querySelector('.dialog');
 var dialogClose = dialogMain.querySelector('.dialog__close');
 var noticeForm = document.querySelector('.notice__form');
@@ -75,8 +76,8 @@ function dialogMainKeydownHandler(e) {
 
 function selectPin(e) {
   deleteActivePin();
-  e.currentTarget.classList.add('pin--active');
-  setupARIA(e.currentTarget, 'aria-selected', 'true');
+  e.classList.add('pin--active');
+  setupARIA(e, 'aria-selected', 'true');
   dialogMain.style.display = 'block';
   setupARIA(dialogMain, 'aria-hidden', 'false');
   setupARIA(dialogClose, 'aria-pressed', 'false');
@@ -125,14 +126,23 @@ function syncSelectedElements(selectedOption) {
   }
 }
 
-for (i = 0; i < pinMap.length; i++) {
-  pinMap[i].addEventListener('click', selectPin);
-  pinMap[i].addEventListener('keydown', function (e) {
-    if (isActivateEvent(e)) {
-      selectPin(e);
+function getPinTarget(e) {
+  var target = e.target;
+  while (target !== tokyoPinMap) {
+    if (target.classList.contains('pin')) {
+      selectPin(target);
+      return;
     }
-  });
+    target = target.parentNode;
+  }
 }
+
+tokyoPinMap.addEventListener('click', getPinTarget);
+tokyoPinMap.addEventListener('keydown', function (e) {
+  if (isActivateEvent(e)) {
+    getPinTarget(e);
+  }
+});
 
 dialogClose.addEventListener('click', letDialogClose);
 dialogClose.addEventListener('keydown', function (e) {
