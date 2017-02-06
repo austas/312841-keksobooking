@@ -31,6 +31,9 @@ var selectedTimeOut = noticeForm.elements.timeOut;
 var ENTER_KEY_CODE = 13;
 var ESCAPE_KEY_CODE = 27;
 
+var pinsTabIndex = [4, 5, 2, 3];
+document.querySelector('.footer-logo-link').setAttribute('tabindex', '0');
+
 noticeTitle.required = true;
 noticeTitle.minLength = '30';
 noticeTitle.maxLength = '100';
@@ -50,7 +53,7 @@ function setupARIA(element, atribute1, atribute2) {
 for (var i = 0; i < pinMap.length; i++) {
   setupARIA(pinMap[i], 'role', 'tab');
   setupARIA(pinMap[i], 'aria-selected', 'false');
-  setupARIA(pinMap[i], 'tabindex', '1');
+  setupARIA(pinMap[i], 'tabindex', pinsTabIndex[i]);
 }
 
 setupARIA(dialogMain, 'role', 'tabpanel');
@@ -89,7 +92,6 @@ function deleteActivePin() {
   if (activePin) {
     activePin.classList.remove('pin--active');
     setupARIA(activePin, 'aria-selected', 'false');
-    dialogMain.style.display = 'none';
   }
 }
 
