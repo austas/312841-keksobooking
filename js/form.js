@@ -1,7 +1,6 @@
 'use strict';
 
 var pinMap = document.querySelectorAll('.pin');
-var activePin = document.querySelector('.pin--active');
 var dialogMain = document.querySelector('.dialog');
 var dialogClose = dialogMain.querySelector('.dialog__close');
 var noticeForm = document.querySelector('.notice__form');
@@ -40,22 +39,21 @@ noticeAddress.required = true;
 selectedCapacity.value = 'not_for_guests'; // Так как по умолчанию выбрана 1 комната, ставлю синх ей элемент на старте
 
 function selectPin(e) {
-  deletePin();
+  deleteActivePin(e);
   e.currentTarget.classList.add('pin--active');
   dialogMain.style.display = 'block';
 }
 
-function deletePin() {
-  for (var i = 0; i < pinMap.length; i++) {
-    if (activePin) {
-      pinMap[i].classList.remove('pin--active');
-    }
+function deleteActivePin(e) {
+  var activePin = document.querySelector('.pin--active');
+  if (activePin) {
+    activePin.classList.remove('pin--active');
   }
 }
 
 function letDialogClose() {
   dialogMain.style.display = 'none';
-  deletePin();
+  deleteActivePin();
 }
 
 function syncSelectedElements(selectedOption) {
@@ -96,7 +94,9 @@ selectedRoomNumbers.addEventListener('change', function () {
 });
 
 selectedTimeIn.addEventListener('change', function (e) {
-  for (i = 0; i < selectedTimeIn.length; i++) {
-    selectedTimeOut.selectedIndex = e.currentTarget.selectedIndex;
-  }
+  selectedTimeOut.selectedIndex = selectedTimeIn.selectedIndex;
+});
+
+selectedTimeOut.addEventListener('change', function (e) {
+  selectedTimeIn.selectedIndex = selectedTimeOut.selectedIndex;
 });
