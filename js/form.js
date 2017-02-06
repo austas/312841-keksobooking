@@ -39,21 +39,17 @@ noticeAddress.required = true;
 selectedCapacity.value = 'not_for_guests'; // Так как по умолчанию выбрана 1 комната, ставлю синх ей элемент на старте
 
 function selectPin(e) {
-  deleteActivePin(e);
+  deleteActivePin();
   e.currentTarget.classList.add('pin--active');
   dialogMain.style.display = 'block';
 }
 
-function deleteActivePin(e) {
+function deleteActivePin() {
   var activePin = document.querySelector('.pin--active');
   if (activePin) {
     activePin.classList.remove('pin--active');
+    dialogMain.style.display = 'none';
   }
-}
-
-function letDialogClose() {
-  dialogMain.style.display = 'none';
-  deleteActivePin();
 }
 
 function syncSelectedElements(selectedOption) {
@@ -82,7 +78,7 @@ for (var i = 0; i < pinMap.length; i++) {
   pinMap[i].addEventListener('click', selectPin);
 }
 
-dialogClose.addEventListener('click', letDialogClose);
+dialogClose.addEventListener('click', deleteActivePin);
 
 
 selectedHouseType.addEventListener('change', function () {
