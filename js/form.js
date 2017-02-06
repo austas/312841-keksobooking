@@ -57,12 +57,15 @@ function syncSelectedElements(selectedOption) {
   switch (selectedOption) {
     case 'flat':
       noticePrice.setAttribute('min', '1000');
+      noticePrice.setAttribute('value', '1000');
       break;
     case 'shack':
       noticePrice.setAttribute('min', '0');
+      noticePrice.setAttribute('value', '0');
       break;
     case 'palace':
       noticePrice.setAttribute('min', '10000');
+      noticePrice.setAttribute('value', '10000');
       break;
     case 'one_room':
       selectedCapacity.value = 'not_for_guests';
@@ -90,9 +93,9 @@ selectedRoomNumbers.addEventListener('change', function () {
 });
 
 selectedTimeIn.addEventListener('change', function (e) {
-  selectedTimeOut.selectedIndex = selectedTimeIn.selectedIndex;
+  selectedTimeOut.value = selectedTimeIn.value;
 });
 
 selectedTimeOut.addEventListener('change', function (e) {
-  selectedTimeIn.selectedIndex = selectedTimeOut.selectedIndex;
+  selectedTimeIn.value = selectedTimeOut.value;
 });
