@@ -19,11 +19,11 @@ function setupARIA(element, atribute1, atribute2) {
   element.setAttribute(atribute1, atribute2);
 }
 
-function selectPin(e) {
+function selectPin(evt) {
   deleteActivePin();
-  e.classList.add('pin--active');
+  evt.classList.add('pin--active');
   dialogMain.style.display = 'block';
-  setupARIA(e, 'aria-pressed', 'true');
+  setupARIA(evt, 'aria-pressed', 'true');
   setupARIA(dialogMain, 'aria-hidden', 'false');
   setupARIA(dialogClose, 'aria-pressed', 'false');
 }
@@ -36,7 +36,7 @@ function deleteActivePin() {
   }
 }
 
-function letDialogClose() {
+function closeDialog() {
   dialogMain.style.display = 'none';
   setupARIA(dialogMain, 'aria-hidden', 'true');
   setupARIA(dialogClose, 'aria-pressed', 'true');
@@ -68,8 +68,8 @@ function syncSelectedElements(selectedOption) {
   }
 }
 
-function getPinTarget(e) {
-  var target = e.target;
+function getPinTarget(evt) {
+  var target = evt.target;
   while (target !== tokyoPinMap) {
     if (target.classList.contains('pin')) {
       selectPin(target);
@@ -79,24 +79,24 @@ function getPinTarget(e) {
   }
 }
 
-function keydownHandler(e) {
-  var activateEvent = e.keyCode;
+function keydownHandler(evt) {
+  var activateEvent = evt.keyCode;
   switch (activateEvent) {
     case ENTER_KEY_CODE:
-      getPinTarget(e);
+      getPinTarget(evt);
       break;
     case ESCAPE_KEY_CODE:
-      letDialogClose(e);
+      closeDialog(evt);
       break;
   }
 }
 
 tokyoPinMap.addEventListener('click', getPinTarget);
-tokyoPinMap.addEventListener('keydown', function (e) {
-  keydownHandler(e);
+tokyoPinMap.addEventListener('keydown', function (evt) {
+  keydownHandler(evt);
 });
 
-dialogClose.addEventListener('click', letDialogClose);
+dialogClose.addEventListener('click', closeDialog);
 
 selectedHouseType.addEventListener('change', function () {
   syncSelectedElements(selectedHouseType);
@@ -106,10 +106,10 @@ selectedRoomNumbers.addEventListener('change', function () {
   syncSelectedElements(selectedRoomNumbers);
 });
 
-selectedTimeIn.addEventListener('change', function (e) {
+selectedTimeIn.addEventListener('change', function (evt) {
   selectedTimeOut.value = selectedTimeIn.value;
 });
 
-selectedTimeOut.addEventListener('change', function (e) {
+selectedTimeOut.addEventListener('change', function (evt) {
   selectedTimeIn.value = selectedTimeOut.value;
 });
