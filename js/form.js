@@ -48,8 +48,8 @@ function setupARIA(element, atribute1, atribute2) {
 function selectPin(e) {
   deleteActivePin();
   e.classList.add('pin--active');
-  setupARIA(e, 'aria-selected', 'true');
   dialogMain.style.display = 'block';
+  setupARIA(e, 'aria-pressed', 'true');
   setupARIA(dialogMain, 'aria-hidden', 'false');
   setupARIA(dialogClose, 'aria-pressed', 'false');
 }
@@ -58,7 +58,7 @@ function deleteActivePin() {
   activePin = document.querySelector('.pin--active');
   if (activePin) {
     activePin.classList.remove('pin--active');
-    setupARIA(activePin, 'aria-selected', 'false');
+    setupARIA(activePin, 'aria-pressed', 'false');
   }
 }
 
