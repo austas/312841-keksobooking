@@ -19,7 +19,7 @@ function setupARIA(element, atribute1, atribute2) {
   element.setAttribute(atribute1, atribute2);
 }
 
-function selectPin(evt) {
+function selectActivePin(evt) {
   deleteActivePin();
   evt.classList.add('pin--active');
   dialogMain.style.display = 'block';
@@ -36,7 +36,7 @@ function deleteActivePin() {
   }
 }
 
-function closeDialog() {
+function dialogCloseHandler() {
   dialogMain.style.display = 'none';
   setupARIA(dialogMain, 'aria-hidden', 'true');
   setupARIA(dialogClose, 'aria-pressed', 'true');
@@ -68,11 +68,11 @@ function syncSelectedElements(selectedOption) {
   }
 }
 
-function getPinTarget(evt) {
+function pinTargetHandler(evt) {
   var target = evt.target;
   while (target !== tokyoPinMap) {
     if (target.classList.contains('pin')) {
-      selectPin(target);
+      selectActivePin(target);
       return;
     }
     target = target.parentNode;
@@ -83,20 +83,20 @@ function keydownHandler(evt) {
   var activateEvent = evt.keyCode;
   switch (activateEvent) {
     case ENTER_KEY_CODE:
-      getPinTarget(evt);
+      pinTargetHandler(evt);
       break;
     case ESCAPE_KEY_CODE:
-      closeDialog(evt);
+      dialogCloseHandler(evt);
       break;
   }
 }
 
-tokyoPinMap.addEventListener('click', getPinTarget);
+tokyoPinMap.addEventListener('click', pinTargetHandler);
 tokyoPinMap.addEventListener('keydown', function (evt) {
   keydownHandler(evt);
 });
 
-dialogClose.addEventListener('click', closeDialog);
+dialogClose.addEventListener('click', dialogCloseHandler);
 
 selectedHouseType.addEventListener('change', function () {
   syncSelectedElements(selectedHouseType);
