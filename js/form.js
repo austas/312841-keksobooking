@@ -8,45 +8,31 @@ var selectedCapacity = noticeForm.elements.capacity;
 var selectedTimeIn = noticeForm.elements.timeIn;
 var selectedTimeOut = noticeForm.elements.timeOut;
 
-function syncSelectedElements(selectedOption) {
-  selectedOption = selectedOption.options[selectedOption.selectedIndex].value;
-  switch (selectedOption) {
-    case 'flat':
-      noticePrice.setAttribute('min', '1000');
-      noticePrice.setAttribute('value', '1000');
-      break;
-    case 'shack':
-      noticePrice.setAttribute('min', '0');
-      noticePrice.setAttribute('value', '0');
-      break;
-    case 'palace':
-      noticePrice.setAttribute('min', '10000');
-      noticePrice.setAttribute('value', '10000');
-      break;
-    case 'one_room':
-      selectedCapacity.value = 'not_for_guests';
-      break;
-    case 'two_rooms':
-    case 'hundred_rooms':
-      selectedCapacity.value = 'for_three_guests';
-      break;
-  }
-}
+var houseTypeOptions = ['flat', 'shack', 'palace'];
+var housePriceOptions = ['1000', '0', '10000'];
+var roomNumbersOptions = ['one_room', 'two_rooms', 'hundred_rooms'];
+var capacityOptions = ['not_for_guests', 'for_three_guests', 'for_three_guests'];
+var timeOptions = ['twelve', 'one', 'two'];
 
 selectedHouseType.addEventListener('change', function () {
-  syncSelectedElements(selectedHouseType);
+  window.synchronizeFields(selectedHouseType, noticePrice, houseTypeOptions, housePriceOptions, 'min');
+  window.synchronizeFields(selectedHouseType, noticePrice, houseTypeOptions, housePriceOptions, 'value');
 });
 
 selectedRoomNumbers.addEventListener('change', function () {
-  syncSelectedElements(selectedRoomNumbers);
+  window.synchronizeFields(selectedRoomNumbers, selectedCapacity, roomNumbersOptions, capacityOptions, 'value');
 });
 
-selectedTimeIn.addEventListener('change', function (evt) {
-  selectedTimeOut.value = selectedTimeIn.value;
+selectedCapacity.addEventListener('change', function () {
+  window.synchronizeFields(selectedCapacity, selectedRoomNumbers, capacityOptions, roomNumbersOptions, 'value');
 });
 
-selectedTimeOut.addEventListener('change', function (evt) {
-  selectedTimeIn.value = selectedTimeOut.value;
+selectedTimeIn.addEventListener('change', function () {
+  window.synchronizeFields(selectedTimeIn, selectedTimeOut, timeOptions, timeOptions, 'value');
+});
+
+selectedTimeOut.addEventListener('change', function () {
+  window.synchronizeFields(selectedTimeOut, selectedTimeIn, timeOptions, timeOptions, 'value');
 });
 
 window.initializePins();
