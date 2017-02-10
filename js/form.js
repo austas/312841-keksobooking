@@ -5,22 +5,7 @@ var activePin = tokyoPinMap.querySelector('.pin--active');
 var dialogMain = document.querySelector('.dialog');
 var dialogClose = dialogMain.querySelector('.dialog__close');
 var noticeForm = document.querySelector('.notice__form');
-var noticeTitle = noticeForm.querySelector('#title');
 var noticePrice = noticeForm.querySelector('#price');
-var noticeAddress = noticeForm.querySelector('#address');
-var noticeHouseType = noticeForm.querySelector('#type');
-var noticeRoomNumbers = noticeForm.querySelector('#room_number');
-var noticeCapacity = noticeForm.querySelector('#capacity');
-var noticeTime = noticeForm.querySelector('#time');
-var noticeTimeOut = noticeForm.querySelector('#timeout');
-
-noticeForm.setAttribute('name', 'noticeForm');
-noticeHouseType.setAttribute('name', 'type');
-noticeRoomNumbers.setAttribute('name', 'roomNumber');
-noticeCapacity.setAttribute('name', 'capacity');
-noticeTime.setAttribute('name', 'timeIn');
-noticeTimeOut.setAttribute('name', 'timeOut');
-
 var selectedHouseType = noticeForm.elements.type;
 var selectedRoomNumbers = noticeForm.elements.roomNumber;
 var selectedCapacity = noticeForm.elements.capacity;
@@ -30,26 +15,15 @@ var selectedTimeOut = noticeForm.elements.timeOut;
 var ENTER_KEY_CODE = 13;
 var ESCAPE_KEY_CODE = 27;
 
-noticeTitle.required = true;
-noticeTitle.minLength = '30';
-noticeTitle.maxLength = '100';
-
-noticePrice.required = true;
-noticePrice.type = 'number';
-noticePrice.setAttribute('min', '1000');
-noticePrice.setAttribute('max', '1000000');
-
-noticeAddress.required = true;
-
 function setupARIA(element, atribute1, atribute2) {
   element.setAttribute(atribute1, atribute2);
 }
 
-function selectPin(e) {
+function selectActivePin(evt) {
   deleteActivePin();
-  e.classList.add('pin--active');
+  evt.classList.add('pin--active');
   dialogMain.style.display = 'block';
-  setupARIA(e, 'aria-pressed', 'true');
+  setupARIA(evt, 'aria-pressed', 'true');
   setupARIA(dialogMain, 'aria-hidden', 'false');
   setupARIA(dialogClose, 'aria-pressed', 'false');
 }
@@ -62,7 +36,7 @@ function deleteActivePin() {
   }
 }
 
-function letDialogClose() {
+function dialogCloseHandler() {
   dialogMain.style.display = 'none';
   setupARIA(dialogMain, 'aria-hidden', 'true');
   setupARIA(dialogClose, 'aria-pressed', 'true');
@@ -94,35 +68,35 @@ function syncSelectedElements(selectedOption) {
   }
 }
 
-function getPinTarget(e) {
-  var target = e.target;
+function pinTargetHandler(evt) {
+  var target = evt.target;
   while (target !== tokyoPinMap) {
     if (target.classList.contains('pin')) {
-      selectPin(target);
+      selectActivePin(target);
       return;
     }
     target = target.parentNode;
   }
 }
 
-function isActivateEvent(e) {
-  var activateEvent = e.keyCode;
+function keydownHandler(evt) {
+  var activateEvent = evt.keyCode;
   switch (activateEvent) {
     case ENTER_KEY_CODE:
-      getPinTarget(e);
+      pinTargetHandler(evt);
       break;
     case ESCAPE_KEY_CODE:
-      letDialogClose(e);
+      dialogCloseHandler(evt);
       break;
   }
 }
 
-tokyoPinMap.addEventListener('click', getPinTarget);
-tokyoPinMap.addEventListener('keydown', function (e) {
-  isActivateEvent(e);
+tokyoPinMap.addEventListener('click', pinTargetHandler);
+tokyoPinMap.addEventListener('keydown', function (evt) {
+  keydownHandler(evt);
 });
 
-dialogClose.addEventListener('click', letDialogClose);
+dialogClose.addEventListener('click', dialogCloseHandler);
 
 selectedHouseType.addEventListener('change', function () {
   syncSelectedElements(selectedHouseType);
@@ -132,10 +106,10 @@ selectedRoomNumbers.addEventListener('change', function () {
   syncSelectedElements(selectedRoomNumbers);
 });
 
-selectedTimeIn.addEventListener('change', function (e) {
+selectedTimeIn.addEventListener('change', function (evt) {
   selectedTimeOut.value = selectedTimeIn.value;
 });
 
-selectedTimeOut.addEventListener('change', function (e) {
+selectedTimeOut.addEventListener('change', function (evt) {
   selectedTimeIn.value = selectedTimeOut.value;
 });

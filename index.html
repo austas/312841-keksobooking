@@ -120,12 +120,12 @@
         <div class="form__panel">
           <div class="form__element  form__element--wide">
             <label for="title">Заголовок объявления</label>
-            <input id="title" type="text" placeholder="Милая, уютная квартирка, например">
+            <input id="title" type="text" placeholder="Милая, уютная квартирка, например" minlength="30" maxlength="100"  required>
           </div>
           <div class="form__row">
             <div class="form__element">
               <label for="type">Тип жилья</label>
-              <select id="type">
+              <select id="type" name="type">
                 <option value="flat" selected>Квартира</option>
                 <option value="shack">Лачуга</option>
                 <option value="palace">Дворец</option>
@@ -133,13 +133,13 @@
             </div>
             <div class="form__element">
               <label for="price">Цена за ночь, руб.</label>
-              <input id="price" type="number" placeholder="5000">
+              <input id="price" type="number" placeholder="5000" min="1000" max="1000000" required>
             </div>
           </div>
           <div class="form__row">
             <div class="form__element">
               <label for="room_number">Кол-во комнат</label>
-              <select id="room_number">
+              <select id="room_number" name="roomNumber">
                 <option value="one_room" selected>1 комната</option>
                 <option value="two_rooms">2 комнаты</option>
                 <option value="hundred_rooms">100 комнат</option>
@@ -147,7 +147,7 @@
             </div>
             <div class="form__element">
               <label for="capacity">Количество мест</label>
-              <select id="capacity">
+              <select id="capacity" name="capacity">
                 <option value="for_three_guests">для 3 гостей</option>
                 <option value="not_for_guests" selected>не для гостей</option>
               </select>
@@ -161,12 +161,12 @@
         <div class="form__panel">
           <div class="form__element  form__element--wide">
             <label for="address">Адрес</label>
-            <input id="address" type="text">
+            <input id="address" type="text" required>
           </div>
           <div class="form__row">
             <div class="form__element">
               <label for="time">Время заезда и выезда</label>
-              <select id="time">
+              <select id="time" name="timeIn">
                 <option value="twelve" selected>После 12</option>
                 <option value="one">После 13</option>
                 <option value="two">После 14</option>
@@ -174,7 +174,7 @@
             </div>
             <div class="form__element">
               <label for="timeout">&nbsp;</label>
-              <select id="timeout" title="Time to go out">
+              <select id="timeout" name="timeOut" title="Time to go out">
                 <option value="twelve" selected>Выезд до 12</option>
                 <option value="one">Выезд до 13</option>
                 <option value="two">Выезд до 14</option>
