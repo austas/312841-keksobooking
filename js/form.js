@@ -1,9 +1,5 @@
 'use strict';
 
-var tokyoPinMap = document.querySelector('.tokyo__pin-map');
-var activePin = tokyoPinMap.querySelector('.pin--active');
-var dialogMain = document.querySelector('.dialog');
-var dialogClose = dialogMain.querySelector('.dialog__close');
 var noticeForm = document.querySelector('.notice__form');
 var noticePrice = noticeForm.querySelector('#price');
 var selectedHouseType = noticeForm.elements.type;
@@ -12,104 +8,25 @@ var selectedCapacity = noticeForm.elements.capacity;
 var selectedTimeIn = noticeForm.elements.timeIn;
 var selectedTimeOut = noticeForm.elements.timeOut;
 
-var ENTER_KEY_CODE = 13;
-var ESCAPE_KEY_CODE = 27;
-
-function setupARIA(element, atribute1, atribute2) {
-  element.setAttribute(atribute1, atribute2);
-}
-
-function selectActivePin(evt) {
-  deleteActivePin();
-  evt.classList.add('pin--active');
-  dialogMain.style.display = 'block';
-  setupARIA(evt, 'aria-pressed', 'true');
-  setupARIA(dialogMain, 'aria-hidden', 'false');
-  setupARIA(dialogClose, 'aria-pressed', 'false');
-}
-
-function deleteActivePin() {
-  activePin = document.querySelector('.pin--active');
-  if (activePin) {
-    activePin.classList.remove('pin--active');
-    setupARIA(activePin, 'aria-pressed', 'false');
-  }
-}
-
-function dialogCloseHandler() {
-  dialogMain.style.display = 'none';
-  setupARIA(dialogMain, 'aria-hidden', 'true');
-  setupARIA(dialogClose, 'aria-pressed', 'true');
-  deleteActivePin();
-}
-
-function syncSelectedElements(selectedOption) {
-  selectedOption = selectedOption.options[selectedOption.selectedIndex].value;
-  switch (selectedOption) {
-    case 'flat':
-      noticePrice.setAttribute('min', '1000');
-      noticePrice.setAttribute('value', '1000');
-      break;
-    case 'shack':
-      noticePrice.setAttribute('min', '0');
-      noticePrice.setAttribute('value', '0');
-      break;
-    case 'palace':
-      noticePrice.setAttribute('min', '10000');
-      noticePrice.setAttribute('value', '10000');
-      break;
-    case 'one_room':
-      selectedCapacity.value = 'not_for_guests';
-      break;
-    case 'two_rooms':
-    case 'hundred_rooms':
-      selectedCapacity.value = 'for_three_guests';
-      break;
-  }
-}
-
-function pinTargetHandler(evt) {
-  var target = evt.target;
-  while (target !== tokyoPinMap) {
-    if (target.classList.contains('pin')) {
-      selectActivePin(target);
-      return;
-    }
-    target = target.parentNode;
-  }
-}
-
-function keydownHandler(evt) {
-  var activateEvent = evt.keyCode;
-  switch (activateEvent) {
-    case ENTER_KEY_CODE:
-      pinTargetHandler(evt);
-      break;
-    case ESCAPE_KEY_CODE:
-      dialogCloseHandler(evt);
-      break;
-  }
-}
-
-tokyoPinMap.addEventListener('click', pinTargetHandler);
-tokyoPinMap.addEventListener('keydown', function (evt) {
-  keydownHandler(evt);
-});
-
-dialogClose.addEventListener('click', dialogCloseHandler);
-
 selectedHouseType.addEventListener('change', function () {
-  syncSelectedElements(selectedHouseType);
+  window.synchronizeFields(selectedHouseType, noticePrice, ['flat', 'shack', 'palace'], ['1000', '0', '10000'], 'min');
+  window.synchronizeFields(selectedHouseType, noticePrice, ['flat', 'shack', 'palace'], ['1000', '0', '10000'], 'value');
 });
 
 selectedRoomNumbers.addEventListener('change', function () {
-  syncSelectedElements(selectedRoomNumbers);
+  window.synchronizeFields(selectedRoomNumbers, selectedCapacity, ['one_room', 'two_rooms', 'hundred_rooms'], ['not_for_guests', 'for_three_guests', 'for_three_guests'], 'value');
 });
 
-selectedTimeIn.addEventListener('change', function (evt) {
-  selectedTimeOut.value = selectedTimeIn.value;
+selectedCapacity.addEventListener('change', function () {
+  window.synchronizeFields(selectedCapacity, selectedRoomNumbers, ['not_for_guests', 'for_three_guests', 'for_three_guests'], ['one_room', 'two_rooms', 'hundred_rooms'], 'value');
 });
 
-selectedTimeOut.addEventListener('change', function (evt) {
-  selectedTimeIn.value = selectedTimeOut.value;
+selectedTimeIn.addEventListener('change', function () {
+  window.synchronizeFields(selectedTimeIn, selectedTimeOut, ['twelve', 'one', 'two'], ['twelve', 'one', 'two'], 'value');
 });
+
+selectedTimeOut.addEventListener('change', function () {
+  window.synchronizeFields(selectedTimeOut, selectedTimeIn, ['twelve', 'one', 'two'], ['twelve', 'one', 'two'], 'value');
+});
+
+window.initializePins();
