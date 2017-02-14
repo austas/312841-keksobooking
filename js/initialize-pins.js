@@ -3,7 +3,6 @@
 window.initializePins = function () {
 
   var tokyoPinMap = document.querySelector('.tokyo__pin-map');
-  var activePin = tokyoPinMap.querySelector('.pin--active');
   var dialogMain = document.querySelector('.dialog');
   var dialogClose = dialogMain.querySelector('.dialog__close');
 
@@ -24,7 +23,7 @@ window.initializePins = function () {
   }
 
   function deleteActivePin() {
-    activePin = document.querySelector('.pin--active');
+    var activePin = tokyoPinMap.querySelector('.pin--active');
     if (activePin) {
       activePin.classList.remove('pin--active');
       setupARIA(activePin, 'aria-pressed', 'false');
