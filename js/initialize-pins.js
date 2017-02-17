@@ -1,6 +1,6 @@
 'use strict';
 
-window.initializePins = function () {
+window.initializePins = (function () {
 
   var tokyoPinMap = document.querySelector('.tokyo__pin-map');
   var dialogMain = document.querySelector('.dialog');
@@ -67,4 +67,4 @@ window.initializePins = function () {
 
   dialogClose.addEventListener('click', dialogCloseHandler);
 
-};
+})();
