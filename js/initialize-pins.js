@@ -16,7 +16,7 @@ window.initializePins = (function () {
   function selectActivePin(evt) {
     deleteActivePin();
     evt.classList.add('pin--active');
-    dialogMain.style.display = 'block';
+    window.showCard(dialogMain);
     setupARIA(evt, 'aria-pressed', 'true');
     setupARIA(dialogMain, 'aria-hidden', 'false');
     setupARIA(dialogClose, 'aria-pressed', 'false');
