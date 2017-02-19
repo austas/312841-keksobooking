@@ -5,6 +5,8 @@ window.initializePins = (function () {
   var tokyoPinMap = document.querySelector('.tokyo__pin-map');
   var dialogMain = document.querySelector('.dialog');
   var dialogClose = dialogMain.querySelector('.dialog__close');
+  var focusOnSelect = null;
+  var focusOn = null;
 
   var ENTER_KEY_CODE = 13;
   var ESCAPE_KEY_CODE = 27;
@@ -42,6 +44,7 @@ window.initializePins = (function () {
     while (target !== tokyoPinMap) {
       if (target.classList.contains('pin')) {
         selectActivePin(target);
+        focusOnSelect = target;
         return;
       }
       target = target.parentNode;
@@ -56,15 +59,27 @@ window.initializePins = (function () {
         break;
       case ESCAPE_KEY_CODE:
         dialogCloseHandler(evt);
+        if (typeof focusOn === 'function') {
+          focusOn();
+        }
         break;
     }
   }
 
+  var focusActivePin = function () {
+    focusOnSelect.focus();
+  };
+
   tokyoPinMap.addEventListener('click', pinTargetHandler);
   tokyoPinMap.addEventListener('keydown', function (evt) {
     keydownHandler(evt);
+    window.initializePins(focusActivePin);
   });
 
   dialogClose.addEventListener('click', dialogCloseHandler);
+
+  return function (cb) {
+    focusOn = cb;
+  };
 
 })();
