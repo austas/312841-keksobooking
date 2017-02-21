@@ -5,11 +5,8 @@ window.initializePins = (function () {
   var tokyoPinMap = document.querySelector('.tokyo__pin-map');
   var dialogMain = document.querySelector('.dialog');
   var dialogClose = dialogMain.querySelector('.dialog__close');
-  var focusOnSelect = null;
+  var selectedPin = null;
   var focusOn = null;
-
-  var ENTER_KEY_CODE = 13;
-  var ESCAPE_KEY_CODE = 27;
 
   function setupARIA(element, atribute1, atribute2) {
     element.setAttribute(atribute1, atribute2);
@@ -37,6 +34,10 @@ window.initializePins = (function () {
     setupARIA(dialogMain, 'aria-hidden', 'true');
     setupARIA(dialogClose, 'aria-pressed', 'true');
     deleteActivePin();
+
+    if (typeof focusOn === 'function') {
+      focusOn();
+    }
   }
 
   function pinTargetHandler(evt) {
@@ -44,42 +45,49 @@ window.initializePins = (function () {
     while (target !== tokyoPinMap) {
       if (target.classList.contains('pin')) {
         selectActivePin(target);
-        focusOnSelect = target;
+        selectedPin = target;
         return;
       }
       target = target.parentNode;
     }
   }
 
-  function keydownHandler(evt) {
-    var activateEvent = evt.keyCode;
-    switch (activateEvent) {
-      case ENTER_KEY_CODE:
-        pinTargetHandler(evt);
-        break;
-      case ESCAPE_KEY_CODE:
-        dialogCloseHandler(evt);
-        if (typeof focusOn === 'function') {
-          focusOn();
-        }
-        break;
-    }
-  }
+  var setFocusOnSelectedPin = function () {
+    selectedPin.focus();
+  };
 
-  var focusActivePin = function () {
-    focusOnSelect.focus();
+  var onTokyoPinMapHandler = function (evt) {
+    if (window.utils.isActivateEvent(evt)) {
+      window.initializePins(setFocusOnSelectedPin, evt);
+    } else if (window.utils.isEscEvent(evt)) {
+      dialogCloseHandler();
+    }
   };
 
   tokyoPinMap.addEventListener('click', pinTargetHandler);
-  tokyoPinMap.addEventListener('keydown', function (evt) {
-    keydownHandler(evt);
-    window.initializePins(focusActivePin);
-  });
+  tokyoPinMap.addEventListener('keydown', onTokyoPinMapHandler);
 
   dialogClose.addEventListener('click', dialogCloseHandler);
 
-  return function (cb) {
+  return function (cb, evt) {
+    pinTargetHandler(evt);
     focusOn = cb;
   };
 
+})();
+
+window.utils = (function () {
+  var ENTER_KEY_CODE = 13;
+  var ESCAPE_KEY_CODE = 27;
+
+  return {
+
+    isActivateEvent: function (evt) {
+      return evt.keyCode && evt.keyCode === ENTER_KEY_CODE;
+    },
+
+    isEscEvent: function (evt) {
+      return evt.keyCode && evt.keyCode === ESCAPE_KEY_CODE;
+    }
+  };
 })();
