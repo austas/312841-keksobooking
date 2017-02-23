@@ -2,16 +2,8 @@
 
 window.load = (function () {
 
-  var errorHandler = function (err) {
-    err = err;
-  };
-
-  return function (url, onLoad, onError) {
+  return function (url, onLoad, errorHandler) {
     var xhr = new XMLHttpRequest();
-
-    if (typeof onError === 'function') {
-      errorHandler = onError;
-    }
 
     xhr.addEventListener('load', function (evt) {
       if (evt.target.status >= 400) {
