@@ -70,34 +70,24 @@ window.initializePins = (function () {
 
   dialogClose.addEventListener('click', dialogCloseHandler);
 
-  var loadSimilarApartments = function (data) {
+  var getSimilarApartments = function (data) {
     var similarApartments = data;
     var firstThreeSimilarApartments = similarApartments.slice(0, 3);
-    // console.log(firstThreeSimilarApartments);
+
+    var fragment = document.createDocumentFragment();
+
+    firstThreeSimilarApartments.forEach(function (it) {
+      fragment.appendChild(window.render(it));
+    });
+
+    tokyoPinMap.appendChild(fragment);
   };
 
   var errorDataHandler = function (err) {
     dialogMain.innerHTML = err;
   };
 
-  window.load(DATA_URL, loadSimilarApartments, errorDataHandler);
-
-  /* similarApartments.forEach(function (it) {
-    fragment.appendChild(window.render(it));
-  }); */
-
-  var fragment = document.createDocumentFragment();
-
-  var newPins = [{
-    style: {left: '300px', top: '400px'}}, {
-      style: {left: '500px', top: '200px'}}, {
-        style: {left: '300px', top: '300px'}}];
-
-  newPins.forEach(function (it) {
-    fragment.appendChild(window.render(it));
-  });
-
-  tokyoPinMap.appendChild(fragment);
+  window.load(DATA_URL, getSimilarApartments, errorDataHandler);
 
   return function (cb, evt) {
     pinTargetHandler(evt);

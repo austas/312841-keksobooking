@@ -10,9 +10,11 @@ window.render = (function () {
     newElement.setAttribute('role', 'button');
     newElement.setAttribute('aria-pressed', 'false');
     newElement.setAttribute('tabindex', '2');
-
     newElement.setAttribute('style', '');
-    newElement.style = ['left: ' + pin.style.left + ';top: ' + pin.style.top];
+    newElement.style = ['left: ' + pin.location.x + 'px;top: ' + pin.location.y + 'px'];
+
+    var newAvatar = newElement.children[0];
+    newAvatar.src = pin.author.avatar;
 
     return newElement;
   };
