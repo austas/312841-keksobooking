@@ -78,6 +78,7 @@ window.initializePins = (function () {
   var loadSimilarApartments = function (data) {
     var similarApartments = data;
     similarApartments.splice(3, similarApartments.length);
+    // console.log(similarApartments);
   };
 
   var errorDataHandler = function (err) {
@@ -86,11 +87,19 @@ window.initializePins = (function () {
 
   window.load(DATA_URL, loadSimilarApartments, errorDataHandler);
 
-  var templateElement = document.querySelector('#pin-template');
-  var elementToClone = templateElement.content.querySelector('.pin');
-  var newElement = elementToClone.cloneNode(true);
+  /* similarApartments.forEach(function (it) {
+    fragment.appendChild(window.render(it));
+  }); */
 
-  tokyoPinMap.appendChild(newElement);
+  var fragment = document.createDocumentFragment();
+
+  var newPins = [{style: 'left: 200px;top: 400px'}, {style: 'left: 400px;top: 200px'}, {style: 'left: 500px;top: 500px'}];
+
+  newPins.forEach(function (it) {
+    fragment.appendChild(window.render(it));
+  });
+
+  tokyoPinMap.appendChild(fragment);
 
   return function (cb, evt) {
     pinTargetHandler(evt);
