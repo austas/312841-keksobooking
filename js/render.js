@@ -7,11 +7,12 @@ window.render = (function () {
   return function (pin) {
     var newElement = elementToClone.cloneNode(true);
 
-    var newPin = newElement.children[0];
-    newPin.style.role = 'button';
-    newPin.style['aria-pressed'] = 'false';
-    newPin.style.tabindex = '2';
-    newPin.style.style = pin.style;
+    newElement.setAttribute('role', 'button');
+    newElement.setAttribute('aria-pressed', 'false');
+    newElement.setAttribute('tabindex', '2');
+
+    newElement.setAttribute('style', '');
+    newElement.style = ['left: ' + pin.style.left + ';top: ' + pin.style.top];
 
     return newElement;
   };

@@ -9,11 +9,6 @@ window.initializePins = (function () {
   var focusOn = null;
   var DATA_URL = 'https://intensive-javascript-server-pedmyactpq.now.sh/keksobooking/data';
 
-  var pins = document.querySelectorAll('.pin');
-  tokyoPinMap.removeChild(pins[1]);
-  tokyoPinMap.removeChild(pins[2]);
-  tokyoPinMap.removeChild(pins[3]);
-
   function setupARIA(element, atribute1, atribute2) {
     element.setAttribute(atribute1, atribute2);
   }
@@ -77,8 +72,8 @@ window.initializePins = (function () {
 
   var loadSimilarApartments = function (data) {
     var similarApartments = data;
-    similarApartments.splice(3, similarApartments.length);
-    // console.log(similarApartments);
+    var firstThreeSimilarApartments = similarApartments.slice(0, 3);
+    // console.log(firstThreeSimilarApartments);
   };
 
   var errorDataHandler = function (err) {
@@ -93,7 +88,10 @@ window.initializePins = (function () {
 
   var fragment = document.createDocumentFragment();
 
-  var newPins = [{style: 'left: 200px;top: 400px'}, {style: 'left: 400px;top: 200px'}, {style: 'left: 500px;top: 500px'}];
+  var newPins = [{
+    style: {left: '300px', top: '400px'}}, {
+      style: {left: '500px', top: '200px'}}, {
+        style: {left: '300px', top: '300px'}}];
 
   newPins.forEach(function (it) {
     fragment.appendChild(window.render(it));
