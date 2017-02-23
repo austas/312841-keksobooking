@@ -7,6 +7,12 @@ window.initializePins = (function () {
   var dialogClose = dialogMain.querySelector('.dialog__close');
   var selectedPin = null;
   var focusOn = null;
+  var DATA_URL = 'https://intensive-javascript-server-pedmyactpq.now.sh/keksobooking/data';
+
+  var pins = document.querySelectorAll('.pin');
+  tokyoPinMap.removeChild(pins[1]);
+  tokyoPinMap.removeChild(pins[2]);
+  tokyoPinMap.removeChild(pins[3]);
 
   function setupARIA(element, atribute1, atribute2) {
     element.setAttribute(atribute1, atribute2);
@@ -68,6 +74,23 @@ window.initializePins = (function () {
   tokyoPinMap.addEventListener('keydown', onTokyoPinMapHandler);
 
   dialogClose.addEventListener('click', dialogCloseHandler);
+
+  var loadSimilarApartments = function (data) {
+    var similarApartments = data;
+    similarApartments.splice(3, similarApartments.length);
+  };
+
+  var errorDataHandler = function (err) {
+    dialogMain.innerHTML = err;
+  };
+
+  window.load(DATA_URL, loadSimilarApartments, errorDataHandler);
+
+  var templateElement = document.querySelector('#pin-template');
+  var elementToClone = templateElement.content.querySelector('.pin');
+  var newElement = elementToClone.cloneNode(true);
+
+  tokyoPinMap.appendChild(newElement);
 
   return function (cb, evt) {
     pinTargetHandler(evt);
