@@ -13,10 +13,10 @@ window.initializePins = (function () {
     element.setAttribute(atribute1, atribute2);
   }
 
-  function selectActivePin(evt) {
+  function selectActivePin(evt, data) {
     deleteActivePin();
     evt.classList.add('pin--active');
-    window.showCard(dialogMain);
+    window.showCard(dialogMain, data);
     setupARIA(evt, 'aria-pressed', 'true');
     setupARIA(dialogMain, 'aria-hidden', 'false');
     setupARIA(dialogClose, 'aria-pressed', 'false');
@@ -41,11 +41,11 @@ window.initializePins = (function () {
     }
   }
 
-  function pinTargetHandler(evt) {
+  function pinTargetHandler(evt, data) {
     var target = evt.target;
     while (target !== tokyoPinMap) {
       if (target.classList.contains('pin')) {
-        selectActivePin(target);
+        selectActivePin(target, data[target.getAttribute('data')]);
         selectedPin = target;
         return;
       }
@@ -57,30 +57,33 @@ window.initializePins = (function () {
     selectedPin.focus();
   };
 
-  var onTokyoPinMapHandler = function (evt) {
+  var onTokyoPinMapHandler = function (evt, data) {
     if (window.utils.isActivateEvent(evt)) {
-      window.initializePins(setFocusOnSelectedPin, evt);
+      window.initializePins(setFocusOnSelectedPin, evt, data);
     } else if (window.utils.isEscEvent(evt)) {
       dialogCloseHandler();
     }
   };
 
-  tokyoPinMap.addEventListener('click', pinTargetHandler);
-  tokyoPinMap.addEventListener('keydown', onTokyoPinMapHandler);
-
   dialogClose.addEventListener('click', dialogCloseHandler);
 
   var getSimilarApartments = function (data) {
-    var similarApartments = data;
-    var firstThreeSimilarApartments = similarApartments.slice(0, 3);
-
+    var firstThreeSimilarApartments = data.slice(0, 3);
     var fragment = document.createDocumentFragment();
 
-    firstThreeSimilarApartments.forEach(function (it) {
-      fragment.appendChild(window.render(it));
+    firstThreeSimilarApartments.forEach(function (object, index) {
+      fragment.appendChild(window.render(object, index));
     });
 
     tokyoPinMap.appendChild(fragment);
+
+    tokyoPinMap.addEventListener('click', function (evt) {
+      pinTargetHandler(evt, data);
+    });
+
+    tokyoPinMap.addEventListener('keydown', function (evt) {
+      onTokyoPinMapHandler(evt, data);
+    });
   };
 
   var errorDataHandler = function (err) {
@@ -89,8 +92,8 @@ window.initializePins = (function () {
 
   window.load(DATA_URL, getSimilarApartments, errorDataHandler);
 
-  return function (cb, evt) {
-    pinTargetHandler(evt);
+  return function (cb, evt, data) {
+    pinTargetHandler(evt, data);
     focusOn = cb;
   };
 

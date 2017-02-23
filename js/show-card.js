@@ -1,7 +1,11 @@
 'use strict';
 
 window.showCard = (function () {
-  return function (element) {
-    element.style.display = 'block';
+  return function (element, data) {
+    if (data) {
+      element.style.display = 'block';
+    } else {
+      element.style.display = 'none';
+    }
   };
 })();
