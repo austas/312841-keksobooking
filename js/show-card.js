@@ -63,12 +63,23 @@ window.showCard = (function () {
     return checkinAndCheckout;
   };
 
-  var renderLodgeFeatures = function (element, data) {
-    var lodgeList = data.offer.features;
+  var getLodgeFeatures = function (element, data) {
+    var featuresList = data.offer.features;
     var fragment = document.createDocumentFragment();
 
-    lodgeList.forEach(function (object) {
+    featuresList.forEach(function (object) {
       fragment.appendChild(window.renderLodgeList(object));
+    });
+
+    return fragment;
+  };
+
+  var getLodgePhotos = function (element, data) {
+    var photosList = data.offer.photos;
+    var fragment = document.createDocumentFragment();
+
+    photosList.forEach(function (object) {
+      fragment.appendChild(window.renderPhoto(object));
     });
 
     return fragment;
@@ -86,10 +97,15 @@ window.showCard = (function () {
     dialogPanel.querySelector('.lodge__type').textContent = getLodgeType(data);
     dialogPanel.querySelector('.lodge__rooms-and-guests').textContent = getRoomsAndGuests(data);
     dialogPanel.querySelector('.lodge__checkin-time').textContent = getCheckinCheckoutTime(data);
+    dialogPanel.querySelector('.lodge__description').textContent = data.offer.description;
 
     var lodgeFeatures = dialogPanel.querySelector('.lodge__features');
     lodgeFeatures.textContent = '';
-    lodgeFeatures.appendChild(renderLodgeFeatures(lodgeFeatures, data));
+    lodgeFeatures.appendChild(getLodgeFeatures(lodgeFeatures, data));
+
+    var lodgePhotos = dialogPanel.querySelector('.lodge__photos');
+    lodgePhotos.textContent = '';
+    lodgePhotos.appendChild(getLodgePhotos(lodgePhotos, data));
 
   };
 
