@@ -9,31 +9,27 @@ window.initializePins = (function () {
   var focusOn = null;
   var DATA_URL = 'https://intensive-javascript-server-pedmyactpq.now.sh/keksobooking/data';
 
-  function setupARIA(element, atribute1, atribute2) {
-    element.setAttribute(atribute1, atribute2);
-  }
-
   function selectActivePin(evt, data) {
     deleteActivePin();
     evt.classList.add('pin--active');
     window.showCard(dialogMain, data);
-    setupARIA(evt, 'aria-pressed', 'true');
-    setupARIA(dialogMain, 'aria-hidden', 'false');
-    setupARIA(dialogClose, 'aria-pressed', 'false');
+    window.utils.setupARIA(evt, 'aria-pressed', 'true');
+    window.utils.setupARIA(dialogMain, 'aria-hidden', 'false');
+    window.utils.setupARIA(dialogClose, 'aria-pressed', 'false');
   }
 
   function deleteActivePin() {
     var activePin = tokyoPinMap.querySelector('.pin--active');
     if (activePin) {
       activePin.classList.remove('pin--active');
-      setupARIA(activePin, 'aria-pressed', 'false');
+      window.utils.setupARIA(activePin, 'aria-pressed', 'false');
     }
   }
 
   function dialogCloseHandler() {
     dialogMain.style.display = 'none';
-    setupARIA(dialogMain, 'aria-hidden', 'true');
-    setupARIA(dialogClose, 'aria-pressed', 'true');
+    window.utils.setupARIA(dialogMain, 'aria-hidden', 'true');
+    window.utils.setupARIA(dialogClose, 'aria-pressed', 'true');
     deleteActivePin();
 
     if (typeof focusOn === 'function') {
