@@ -68,7 +68,7 @@ window.showCard = (function () {
     var fragment = document.createDocumentFragment();
 
     featuresList.forEach(function (object) {
-      fragment.appendChild(window.renderLodgeList(object));
+      fragment.appendChild(window.render.feature(object));
     });
 
     return fragment;
@@ -79,7 +79,7 @@ window.showCard = (function () {
     var fragment = document.createDocumentFragment();
 
     photosList.forEach(function (object) {
-      fragment.appendChild(window.renderPhoto(object));
+      fragment.appendChild(window.render.photo(object));
     });
 
     return fragment;

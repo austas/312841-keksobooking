@@ -68,7 +68,7 @@ window.initializePins = (function () {
     var fragment = document.createDocumentFragment();
 
     firstThreeSimilarApartments.forEach(function (object, index) {
-      fragment.appendChild(window.render(object, index));
+      fragment.appendChild(window.render.pin(object, index));
     });
 
     tokyoPinMap.appendChild(fragment);
