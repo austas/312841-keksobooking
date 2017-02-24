@@ -51,6 +51,29 @@ window.showCard = (function () {
     return roomsAndGuests;
   };
 
+  var getCheckinCheckoutTime = function (data) {
+    var checkIn = data.offer.checkin;
+    var checkOut = data.offer.checkout;
+    var checkinAndCheckout = 'Заезд после ' + checkIn + ', выезд до ' + checkOut;
+
+    if (checkIn && checkOut === '0:00') {
+      checkinAndCheckout = '';
+    }
+
+    return checkinAndCheckout;
+  };
+
+  var renderLodgeFeatures = function (element, data) {
+    var lodgeList = data.offer.features;
+    var fragment = document.createDocumentFragment();
+
+    lodgeList.forEach(function (object) {
+      fragment.appendChild(window.renderLodgeList(object));
+    });
+
+    return fragment;
+  };
+
   var renderOpenedCard = function (element, data) {
 
     var dialogTitle = element.querySelector('.dialog__title');
@@ -62,6 +85,11 @@ window.showCard = (function () {
     dialogPanel.querySelector('.lodge__price').innerHTML = data.offer.price + '<span style="font-family: \'PT Sans\', serif;">&#8399;</span>/ночь';
     dialogPanel.querySelector('.lodge__type').textContent = getLodgeType(data);
     dialogPanel.querySelector('.lodge__rooms-and-guests').textContent = getRoomsAndGuests(data);
+    dialogPanel.querySelector('.lodge__checkin-time').textContent = getCheckinCheckoutTime(data);
+
+    var lodgeFeatures = dialogPanel.querySelector('.lodge__features');
+    lodgeFeatures.textContent = '';
+    lodgeFeatures.appendChild(renderLodgeFeatures(lodgeFeatures, data));
 
   };
 
