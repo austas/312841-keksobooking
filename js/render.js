@@ -36,7 +36,7 @@ window.render = (function () {
       newPhoto.setAttribute('alt', 'Lodge photo');
       newPhoto.setAttribute('width', '52');
       newPhoto.setAttribute('height', '42');
-      newPhoto.setAttribute('style', 'border: 1px solid white');
+      newPhoto.setAttribute('style', 'padding: 1px');
       return newPhoto;
     }
   };

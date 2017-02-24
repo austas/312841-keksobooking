@@ -93,7 +93,7 @@ window.showCard = (function () {
     var dialogPanel = element.querySelector('.dialog__panel');
     dialogPanel.querySelector('.lodge__title').textContent = data.offer.title;
     dialogPanel.querySelector('.lodge__address').textContent = data.offer.address;
-    dialogPanel.querySelector('.lodge__price').innerHTML = data.offer.price + '<span style="font-family: \'PT Sans\', serif;">&#8399;</span>/ночь';
+    dialogPanel.querySelector('.lodge__price').innerHTML = data.offer.price + '<span style="font-family: \'PT Sans\', serif;">&#8381;</span>/ночь';
     dialogPanel.querySelector('.lodge__type').textContent = getLodgeType(data);
     dialogPanel.querySelector('.lodge__rooms-and-guests').textContent = getRoomsAndGuests(data);
     dialogPanel.querySelector('.lodge__checkin-time').textContent = getCheckinCheckoutTime(data);
