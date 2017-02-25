@@ -21,18 +21,18 @@ window.render = (function () {
       return newElement;
     },
 
-    feature: function (lodgeList) {
+    feature: function (lodgeName) {
       var lodge = document.createElement('span');
 
       lodge.classList.add('feature__image');
-      lodge.classList.add(['feature__image--' + lodgeList]);
+      lodge.classList.add(['feature__image--' + lodgeName]);
       return lodge;
     },
 
-    photo: function (photos) {
+    photo: function (photoSource) {
       var newPhoto = document.createElement('img');
 
-      newPhoto.setAttribute('src', photos);
+      newPhoto.setAttribute('src', photoSource);
       newPhoto.setAttribute('alt', 'Lodge photo');
       newPhoto.setAttribute('width', '52');
       newPhoto.setAttribute('height', '42');

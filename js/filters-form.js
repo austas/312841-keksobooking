@@ -9,8 +9,7 @@ window.filtersForm = (function () {
 
   var getPriceRange = function (data) {
     var priceRange;
-    var housingPrice = selectedHousingPrice.value;
-    switch (housingPrice) {
+    switch (selectedHousingPrice.value) {
       case 'low':
         priceRange = data.filter(function (object) {
           return object.offer.price < 10000;
@@ -46,7 +45,6 @@ window.filtersForm = (function () {
     });
 
     var featuresList = selectedHousingFeatures.querySelectorAll('input');
-
     Array.prototype.forEach.call(featuresList, function (currentFeature) {
       if (currentFeature.checked) {
         var featureName = currentFeature.value;

@@ -56,7 +56,7 @@ window.initializePins = (function () {
     selectedPin.focus();
   };
 
-  var onTokyoPinMapHandler = function (evt, data) {
+  var tokyoPinMapHandler = function (evt, data) {
     if (window.utils.isActivateEvent(evt)) {
       window.initializePins(setFocusOnSelectedPin, evt, data);
     } else if (window.utils.isEscEvent(evt)) {
@@ -66,20 +66,20 @@ window.initializePins = (function () {
 
   dialogClose.addEventListener('click', dialogCloseHandler);
 
-  var setFiltersForm = function () {
+  var filtersFormHandler = function () {
     filteredApartments = window.filtersForm(allApartments);
-    removePinsExceptMain();
+    removeRenderedPins();
     renderSimilarApartments(filteredApartments);
   };
 
-  var removePinsExceptMain = function () {
+  var removeRenderedPins = function () {
     var pins = tokyoPinMap.querySelectorAll('.pin');
     for (var i = 1; i < pins.length; i++) {
       tokyoPinMap.removeChild(pins[i]);
     }
   };
 
-  filtersForm.addEventListener('change', setFiltersForm);
+  filtersForm.addEventListener('change', filtersFormHandler);
 
   var renderSimilarApartments = function (data) {
 
@@ -95,7 +95,7 @@ window.initializePins = (function () {
     });
 
     tokyoPinMap.addEventListener('keydown', function (evt) {
-      onTokyoPinMapHandler(evt, data);
+      tokyoPinMapHandler(evt, data);
     });
   };
 
@@ -103,14 +103,14 @@ window.initializePins = (function () {
     dialogMain.innerHTML = err;
   };
 
-  var loadedData = function (data) {
+  var onLoad = function (data) {
     allApartments = data;
     var firstRandomApartments = window.utils.getMinRandomElement(data);
     var threeRandomApartments = data.slice(firstRandomApartments, firstRandomApartments + 3);
     renderSimilarApartments(threeRandomApartments);
   };
 
-  window.load(DATA_URL, loadedData, errorDataHandler);
+  window.load(DATA_URL, onLoad, errorDataHandler);
 
   return function (cb, evt, data) {
     pinTargetHandler(evt, data);
