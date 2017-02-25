@@ -64,21 +64,23 @@ window.initializePins = (function () {
   dialogClose.addEventListener('click', dialogCloseHandler);
 
   var getSimilarApartments = function (data) {
-    var firstThreeSimilarApartments = data.slice(0, 3);
+    var firstRandomApartments = window.utils.getMinRandomElement(data);
+    var threeRandomApartments = data.slice(firstRandomApartments, firstRandomApartments + 3);
+
     var fragment = document.createDocumentFragment();
 
-    firstThreeSimilarApartments.forEach(function (object, index) {
+    threeRandomApartments.forEach(function (object, index) {
       fragment.appendChild(window.render.pin(object, index));
     });
 
     tokyoPinMap.appendChild(fragment);
 
     tokyoPinMap.addEventListener('click', function (evt) {
-      pinTargetHandler(evt, data);
+      pinTargetHandler(evt, threeRandomApartments);
     });
 
     tokyoPinMap.addEventListener('keydown', function (evt) {
-      onTokyoPinMapHandler(evt, data);
+      onTokyoPinMapHandler(evt, threeRandomApartments);
     });
   };
 
