@@ -5,9 +5,12 @@ window.initializePins = (function () {
   var tokyoPinMap = document.querySelector('.tokyo__pin-map');
   var dialogMain = document.querySelector('.dialog');
   var dialogClose = dialogMain.querySelector('.dialog__close');
+  var filtersForm = document.querySelector('.tokyo__filters');
   var selectedPin = null;
   var focusOn = null;
   var DATA_URL = 'https://intensive-javascript-server-pedmyactpq.now.sh/keksobooking/data';
+  var allApartments;
+  var filteredApartments;
 
   function selectActivePin(evt, data) {
     deleteActivePin();
@@ -63,24 +66,36 @@ window.initializePins = (function () {
 
   dialogClose.addEventListener('click', dialogCloseHandler);
 
+  var setFiltersForm = function () {
+    filteredApartments = window.filtersForm(allApartments);
+    getSimilarApartments(filteredApartments);
+  };
+
+  filtersForm.addEventListener('change', setFiltersForm);
+
   var getSimilarApartments = function (data) {
-    var firstRandomApartments = window.utils.getMinRandomElement(data);
-    var threeRandomApartments = data.slice(firstRandomApartments, firstRandomApartments + 3);
 
     var fragment = document.createDocumentFragment();
-
-    threeRandomApartments.forEach(function (object, index) {
+    data.forEach(function (object, index) {
       fragment.appendChild(window.render.pin(object, index));
     });
 
-    tokyoPinMap.appendChild(fragment);
+    if (data === filteredApartments) {
+      var pins = tokyoPinMap.querySelectorAll('.pin');
+      for (var i = 1; i < pins.length; i++) {
+        tokyoPinMap.removeChild(pins[i]);
+        tokyoPinMap.appendChild(fragment);
+      }
+    } else {
+      tokyoPinMap.appendChild(fragment);
+    }
 
     tokyoPinMap.addEventListener('click', function (evt) {
-      pinTargetHandler(evt, threeRandomApartments);
+      pinTargetHandler(evt, data);
     });
 
     tokyoPinMap.addEventListener('keydown', function (evt) {
-      onTokyoPinMapHandler(evt, threeRandomApartments);
+      onTokyoPinMapHandler(evt, data);
     });
   };
 
@@ -88,7 +103,14 @@ window.initializePins = (function () {
     dialogMain.innerHTML = err;
   };
 
-  window.load(DATA_URL, getSimilarApartments, errorDataHandler);
+  var loadedData = function (data) {
+    allApartments = data;
+    var firstRandomApartments = window.utils.getMinRandomElement(data);
+    var threeRandomApartments = data.slice(firstRandomApartments, firstRandomApartments + 3);
+    getSimilarApartments(threeRandomApartments);
+  };
+
+  window.load(DATA_URL, loadedData, errorDataHandler);
 
   return function (cb, evt, data) {
     pinTargetHandler(evt, data);
