@@ -12,6 +12,10 @@ window.utils = (function () {
 
     isEscEvent: function (evt) {
       return evt.keyCode && evt.keyCode === ESCAPE_KEY_CODE;
+    },
+
+    setupARIA: function (element, atribute1, atribute2) {
+      element.setAttribute(atribute1, atribute2);
     }
   };
 })();
