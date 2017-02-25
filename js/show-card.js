@@ -30,7 +30,11 @@ window.showCard = (function () {
         break;
       case 2:
       case 3:
+      case 4:
         roomsAndGuests = rooms + ' комнаты, для ';
+        break;
+      default:
+        roomsAndGuests = rooms + ' комнат, для ';
         break;
     }
 
@@ -38,13 +42,12 @@ window.showCard = (function () {
       case 1:
         roomsAndGuests += guests + ' гостя';
         break;
-      case 2:
-      case 3:
+      default:
         roomsAndGuests += guests + ' гостей';
         break;
     }
 
-    if (roomsAndGuests === '0') {
+    if (rooms + guests === 0) {
       roomsAndGuests = '';
     }
 
