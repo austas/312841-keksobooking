@@ -5,7 +5,7 @@ window.filtersForm = (function () {
   var selectedHousingPrice = document.querySelector('#housing_price');
   var selectedHousingRoomNumber = document.querySelector('#housing_room-number');
   var selectedHousingGuestsNumber = document.querySelector('#housing_guests-number');
-  // var selectedHousingFeatures = filtersForm.element.housing_features;
+  var selectedHousingFeatures = document.querySelector('#housing_features');
 
   var getPriceRange = function (data) {
     var priceRange;
@@ -43,6 +43,17 @@ window.filtersForm = (function () {
 
     filteredApartments = filteredApartments.filter(function (object) {
       return selectedHousingGuestsNumber.value === 'any' || object.offer.guests.toString() === selectedHousingGuestsNumber.value;
+    });
+
+    var featuresList = selectedHousingFeatures.querySelectorAll('input');
+
+    Array.prototype.forEach.call(featuresList, function (currentFeature) {
+      if (currentFeature.checked) {
+        var featureName = currentFeature.value;
+        filteredApartments = filteredApartments.filter(function (object) {
+          return object.offer.features.indexOf(featureName) >= 0;
+        });
+      }
     });
 
     return filteredApartments;
