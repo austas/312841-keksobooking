@@ -41,7 +41,7 @@ window.initializePins = (function () {
     var target = evt.target;
     while (target !== tokyoPinMap) {
       if (target.classList.contains('pin')) {
-        selectActivePin(target, data[target.getAttribute('data')]);
+        selectActivePin(target, data[target.dataset.index]);
         selectedPin = target;
         return;
       }
