@@ -68,27 +68,27 @@ window.initializePins = (function () {
 
   var setFiltersForm = function () {
     filteredApartments = window.filtersForm(allApartments);
-    getSimilarApartments(filteredApartments);
+    removePinsExceptMain();
+    renderSimilarApartments(filteredApartments);
+  };
+
+  var removePinsExceptMain = function () {
+    var pins = tokyoPinMap.querySelectorAll('.pin');
+    for (var i = 1; i < pins.length; i++) {
+      tokyoPinMap.removeChild(pins[i]);
+    }
   };
 
   filtersForm.addEventListener('change', setFiltersForm);
 
-  var getSimilarApartments = function (data) {
+  var renderSimilarApartments = function (data) {
 
     var fragment = document.createDocumentFragment();
     data.forEach(function (object, index) {
       fragment.appendChild(window.render.pin(object, index));
     });
 
-    if (data === filteredApartments) {
-      var pins = tokyoPinMap.querySelectorAll('.pin');
-      for (var i = 1; i < pins.length; i++) {
-        tokyoPinMap.removeChild(pins[i]);
-        tokyoPinMap.appendChild(fragment);
-      }
-    } else {
-      tokyoPinMap.appendChild(fragment);
-    }
+    tokyoPinMap.appendChild(fragment);
 
     tokyoPinMap.addEventListener('click', function (evt) {
       pinTargetHandler(evt, data);
@@ -107,7 +107,7 @@ window.initializePins = (function () {
     allApartments = data;
     var firstRandomApartments = window.utils.getMinRandomElement(data);
     var threeRandomApartments = data.slice(firstRandomApartments, firstRandomApartments + 3);
-    getSimilarApartments(threeRandomApartments);
+    renderSimilarApartments(threeRandomApartments);
   };
 
   window.load(DATA_URL, loadedData, errorDataHandler);
