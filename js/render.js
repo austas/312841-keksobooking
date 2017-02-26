@@ -8,7 +8,7 @@ window.render = (function () {
     pin: function (pin, index) {
       var newElement = elementToClone.cloneNode(true);
 
-      newElement.setAttribute('data-index', index);
+      newElement.dataset.index = index;
       newElement.setAttribute('role', 'button');
       newElement.setAttribute('aria-pressed', 'false');
       newElement.setAttribute('tabindex', '2');
