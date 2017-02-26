@@ -20,7 +20,7 @@ window.filtersForm = (function () {
           return object.offer.price >= 10000 && object.offer.price < 50000;
         });
         break;
-      case 'hight':
+      case 'high':
         priceRange = data.filter(function (object) {
           return object.offer.price >= 50000;
         });
@@ -45,14 +45,15 @@ window.filtersForm = (function () {
     });
 
     var featuresList = selectedHousingFeatures.querySelectorAll('input');
-    Array.prototype.forEach.call(featuresList, function (currentFeature) {
-      if (currentFeature.checked) {
-        var featureName = currentFeature.value;
+
+    for (var i = 0; i < featuresList.length; i++) {
+      if (featuresList[i].checked) {
+        var featureName = featuresList[i].value;
         filteredApartments = filteredApartments.filter(function (object) {
           return object.offer.features.indexOf(featureName) >= 0;
         });
       }
-    });
+    }
 
     return filteredApartments;
   };

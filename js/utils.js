@@ -19,16 +19,8 @@ window.utils = (function () {
     },
 
     getRandomElement: function (array) {
-      var randomElementIndex = Math.floor(Math.random() * array.length - 3);
+      var randomElementIndex = Math.floor(Math.random() * (array.length - 3));
       return randomElementIndex;
-    },
-
-    getMinRandomElement: function (array) {
-      var minIndex = window.utils.getRandomElement(array);
-      while (minIndex < 0) {
-        minIndex = window.utils.getRandomElement(array);
-      }
-      return minIndex;
     }
   };
 })();

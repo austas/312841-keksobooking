@@ -19,8 +19,8 @@ window.noticeForm = (function () {
   };
 
   selectedHouseType.addEventListener('change', function () {
-    window.synchronizeFields(selectedHouseType, noticePrice, ['flat', 'shack', 'palace'], ['1000', '0', '10000'], syncValueWithMin);
-    window.synchronizeFields(selectedHouseType, noticePrice, ['flat', 'shack', 'palace'], ['1000', '0', '10000'], syncValues);
+    window.synchronizeFields(selectedHouseType, noticePrice, ['flat', 'bungalo', 'house'], ['1000', '0', '10000'], syncValueWithMin);
+    window.synchronizeFields(selectedHouseType, noticePrice, ['flat', 'bungalo', 'house'], ['1000', '0', '10000'], syncValues);
   });
 
   selectedRoomNumbers.addEventListener('change', function () {
