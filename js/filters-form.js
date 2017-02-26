@@ -20,7 +20,7 @@ window.filtersForm = (function () {
           return object.offer.price >= 10000 && object.offer.price < 50000;
         });
         break;
-      case 'hight':
+      case 'high':
         priceRange = data.filter(function (object) {
           return object.offer.price >= 50000;
         });

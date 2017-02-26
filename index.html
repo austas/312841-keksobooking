@@ -25,7 +25,7 @@
         <label><select name="housing_price" id="housing_price" class="tokyo__filter">
           <option value="middle" selected>10000 - 50000&#x20bd;</option>
           <option value="low">до 10000&#x20bd;</option>
-          <option value="hight">от 50000&#x20bd;</option>
+          <option value="high">от 50000&#x20bd;</option>
         </select></label>
         <label><select name="housing_room-number" id="housing_room-number" class="tokyo__filter">
           <option value="any" selected>Любое число комнат</option>
@@ -41,27 +41,27 @@
         <fieldset id="housing_features" class="tokyo__filter-set">
           <label class="feature">
             <input type="checkbox" name="feature" value="wifi"><span
-            class="feature__image  feature__image--wifi"></span>
+            class="feature__image  feature__image--wifi" title="Wi-Fi"></span>
           </label>
           <label class="feature">
             <input type="checkbox" name="feature" value="dishwasher"><span
-            class="feature__image  feature__image--dishwasher"></span>
+            class="feature__image  feature__image--dishwasher" title="Кухня"></span>
           </label>
           <label class="feature">
             <input type="checkbox" name="feature" value="parking"><span
-            class="feature__image  feature__image--parking"></span>
+            class="feature__image  feature__image--parking" title="Парковка"></span>
           </label>
           <label class="feature">
             <input type="checkbox" name="feature" value="washer"><span
-            class="feature__image  feature__image--washer"></span>
+            class="feature__image  feature__image--washer" title="Стиральная машина"></span>
           </label>
           <label class="feature">
             <input type="checkbox" name="feature" value="elevator"><span
-            class="feature__image  feature__image--elevator"></span>
+            class="feature__image  feature__image--elevator" title="Лифт"></span>
           </label>
           <label class="feature">
             <input type="checkbox" name="feature" value="conditioner"><span
-            class="feature__image  feature__image--conditioner"></span>
+            class="feature__image  feature__image--conditioner" title="Кондиционер"></span>
           </label>
         </fieldset>
       </form>
@@ -113,8 +113,8 @@
               <label for="type">Тип жилья</label>
               <select id="type" name="type">
                 <option value="flat" selected>Квартира</option>
-                <option value="shack">Лачуга</option>
-                <option value="palace">Дворец</option>
+                <option value="bungalo">Лачуга</option>
+                <option value="house">Дворец</option>
               </select>
             </div>
             <div class="form__element">
