@@ -105,7 +105,7 @@ window.initializePins = (function () {
 
   var onLoad = function (data) {
     allApartments = data;
-    var firstRandomApartments = window.utils.getMinRandomElement(data);
+    var firstRandomApartments = window.utils.getRandomElement(data);
     var threeRandomApartments = data.slice(firstRandomApartments, firstRandomApartments + 3);
     renderSimilarApartments(threeRandomApartments);
   };
