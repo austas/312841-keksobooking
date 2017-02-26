@@ -5,9 +5,12 @@ window.initializePins = (function () {
   var tokyoPinMap = document.querySelector('.tokyo__pin-map');
   var dialogMain = document.querySelector('.dialog');
   var dialogClose = dialogMain.querySelector('.dialog__close');
+  var filtersForm = document.querySelector('.tokyo__filters');
   var selectedPin = null;
   var focusOn = null;
   var DATA_URL = 'https://intensive-javascript-server-pedmyactpq.now.sh/keksobooking/data';
+  var allApartments;
+  var filteredApartments;
 
   function selectActivePin(evt, data) {
     deleteActivePin();
@@ -41,7 +44,7 @@ window.initializePins = (function () {
     var target = evt.target;
     while (target !== tokyoPinMap) {
       if (target.classList.contains('pin')) {
-        selectActivePin(target, data[target.getAttribute('data')]);
+        selectActivePin(target, data[target.dataset.index]);
         selectedPin = target;
         return;
       }
@@ -53,7 +56,7 @@ window.initializePins = (function () {
     selectedPin.focus();
   };
 
-  var onTokyoPinMapHandler = function (evt, data) {
+  var tokyoPinMapHandler = function (evt, data) {
     if (window.utils.isActivateEvent(evt)) {
       window.initializePins(setFocusOnSelectedPin, evt, data);
     } else if (window.utils.isEscEvent(evt)) {
@@ -63,11 +66,25 @@ window.initializePins = (function () {
 
   dialogClose.addEventListener('click', dialogCloseHandler);
 
-  var getSimilarApartments = function (data) {
-    var firstThreeSimilarApartments = data.slice(0, 3);
-    var fragment = document.createDocumentFragment();
+  var filtersFormHandler = function () {
+    filteredApartments = window.filtersForm(allApartments);
+    removeRenderedPins();
+    renderSimilarApartments(filteredApartments);
+  };
 
-    firstThreeSimilarApartments.forEach(function (object, index) {
+  var removeRenderedPins = function () {
+    var pins = tokyoPinMap.querySelectorAll('.pin');
+    for (var i = 1; i < pins.length; i++) {
+      tokyoPinMap.removeChild(pins[i]);
+    }
+  };
+
+  filtersForm.addEventListener('change', filtersFormHandler);
+
+  var renderSimilarApartments = function (data) {
+
+    var fragment = document.createDocumentFragment();
+    data.forEach(function (object, index) {
       fragment.appendChild(window.render.pin(object, index));
     });
 
@@ -78,7 +95,7 @@ window.initializePins = (function () {
     });
 
     tokyoPinMap.addEventListener('keydown', function (evt) {
-      onTokyoPinMapHandler(evt, data);
+      tokyoPinMapHandler(evt, data);
     });
   };
 
@@ -86,7 +103,14 @@ window.initializePins = (function () {
     dialogMain.innerHTML = err;
   };
 
-  window.load(DATA_URL, getSimilarApartments, errorDataHandler);
+  var onLoad = function (data) {
+    allApartments = data;
+    var firstRandomApartments = window.utils.getMinRandomElement(data);
+    var threeRandomApartments = data.slice(firstRandomApartments, firstRandomApartments + 3);
+    renderSimilarApartments(threeRandomApartments);
+  };
+
+  window.load(DATA_URL, onLoad, errorDataHandler);
 
   return function (cb, evt, data) {
     pinTargetHandler(evt, data);
