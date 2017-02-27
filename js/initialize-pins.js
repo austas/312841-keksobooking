@@ -11,6 +11,7 @@ window.initializePins = (function () {
   var DATA_URL = 'https://intensive-javascript-server-pedmyactpq.now.sh/keksobooking/data';
   var allApartments;
   var filteredApartments;
+  var MAX_NUMBER_OF_PINS_ON_START = 3;
 
   var selectActivePin = function (evt, data) {
     deleteActivePin();
@@ -105,8 +106,8 @@ window.initializePins = (function () {
 
   var onLoad = function (data) {
     allApartments = data;
-    var firstRandomApartments = window.utils.getRandomElement(data);
-    var threeRandomApartments = data.slice(firstRandomApartments, firstRandomApartments + 3);
+    var firstRandomApartments = window.utils.getRandomElement(data, MAX_NUMBER_OF_PINS_ON_START);
+    var threeRandomApartments = data.slice(firstRandomApartments, firstRandomApartments + MAX_NUMBER_OF_PINS_ON_START);
     renderSimilarApartments(threeRandomApartments);
   };
 
