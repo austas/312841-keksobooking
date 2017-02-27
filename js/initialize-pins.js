@@ -12,24 +12,24 @@ window.initializePins = (function () {
   var allApartments;
   var filteredApartments;
 
-  function selectActivePin(evt, data) {
+  var selectActivePin = function (evt, data) {
     deleteActivePin();
     evt.classList.add('pin--active');
     window.showCard(dialogMain, data);
     window.utils.setupARIA(evt, 'aria-pressed', 'true');
     window.utils.setupARIA(dialogMain, 'aria-hidden', 'false');
     window.utils.setupARIA(dialogClose, 'aria-pressed', 'false');
-  }
+  };
 
-  function deleteActivePin() {
+  var deleteActivePin = function () {
     var activePin = tokyoPinMap.querySelector('.pin--active');
     if (activePin) {
       activePin.classList.remove('pin--active');
       window.utils.setupARIA(activePin, 'aria-pressed', 'false');
     }
-  }
+  };
 
-  function dialogCloseHandler() {
+  var dialogCloseHandler = function () {
     dialogMain.style.display = 'none';
     window.utils.setupARIA(dialogMain, 'aria-hidden', 'true');
     window.utils.setupARIA(dialogClose, 'aria-pressed', 'true');
@@ -38,9 +38,9 @@ window.initializePins = (function () {
     if (typeof focusOn === 'function') {
       focusOn();
     }
-  }
+  };
 
-  function pinTargetHandler(evt, data) {
+  var pinTargetHandler = function (evt, data) {
     var target = evt.target;
     while (target !== tokyoPinMap) {
       if (target.classList.contains('pin')) {
@@ -50,7 +50,7 @@ window.initializePins = (function () {
       }
       target = target.parentNode;
     }
-  }
+  };
 
   var setFocusOnSelectedPin = function () {
     selectedPin.focus();

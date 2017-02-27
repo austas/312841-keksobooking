@@ -3,6 +3,7 @@
 window.utils = (function () {
   var ENTER_KEY_CODE = 13;
   var ESCAPE_KEY_CODE = 27;
+  var MAX_NUMBER_OF_PINS_ON_START = 3;
 
   return {
 
@@ -19,7 +20,7 @@ window.utils = (function () {
     },
 
     getRandomElement: function (array) {
-      var randomElementIndex = Math.floor(Math.random() * (array.length - 3));
+      var randomElementIndex = Math.floor(Math.random() * (array.length - MAX_NUMBER_OF_PINS_ON_START));
       return randomElementIndex;
     }
   };
