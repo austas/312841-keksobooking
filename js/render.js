@@ -25,7 +25,7 @@ window.render = (function () {
       var lodge = document.createElement('span');
 
       lodge.classList.add('feature__image');
-      lodge.classList.add(['feature__image--' + lodgeName]);
+      lodge.classList.add(['feature__image--' + lodgeName.toString()]);
       return lodge;
     },
 
