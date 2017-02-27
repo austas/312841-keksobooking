@@ -16,7 +16,7 @@ window.render = (function () {
       newElement.setAttribute('tabindex', '2');
       newElement.setAttribute('style', '');
 
-      var coordsX = pin.location.x - (PIN_WIDTH / 2);
+      var coordsX = pin.location.x - PIN_WIDTH / 2;
       var coordsY = pin.location.y - PIN_HEIGHT;
       newElement.style = ['left: ' + coordsX.toString() + 'px;top: ' + coordsY.toString() + 'px'];
 
