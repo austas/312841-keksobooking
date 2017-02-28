@@ -26,12 +26,13 @@ window.render = (function () {
       return newElement;
     },
 
-    feature: function (lodgeName) {
-      var lodge = document.createElement('span');
+    feature: function (features) {
+      var newFeature = document.createElement('span');
+      var featureItem = 'feature__image--' + features.toString();
 
-      lodge.classList.add('feature__image');
-      lodge.classList.add(['feature__image--' + lodgeName.toString()]);
-      return lodge;
+      newFeature.classList.add('feature__image');
+      newFeature.classList.add([featureItem]);
+      return newFeature;
     },
 
     photo: function (photoSource) {
