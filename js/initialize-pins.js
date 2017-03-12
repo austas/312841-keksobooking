@@ -6,12 +6,18 @@ window.initializePins = (function () {
   var dialogMain = document.querySelector('.dialog');
   var dialogClose = dialogMain.querySelector('.dialog__close');
   var filtersForm = document.querySelector('.tokyo__filters');
+  var pinMain = document.querySelector('.pin__main');
+  var pinMainAddress = document.querySelector('#address');
+
+  var DATA_URL = 'https://intensive-javascript-server-pedmyactpq.now.sh/keksobooking/data';
+  var MAX_NUMBER_OF_PINS_ON_START = 3;
+  var PIN_MAIN_WIDTH = 75;
+  var PIN_MAIN_HEIGHT = 94;
+
   var selectedPin = null;
   var focusOn = null;
-  var DATA_URL = 'https://intensive-javascript-server-pedmyactpq.now.sh/keksobooking/data';
   var allApartments;
   var filteredApartments;
-  var MAX_NUMBER_OF_PINS_ON_START = 3;
 
   var selectActivePin = function (evt, data) {
     deleteActivePin();
@@ -99,6 +105,19 @@ window.initializePins = (function () {
       tokyoPinMapHandler(evt, data);
     });
   };
+
+  pinMain.addEventListener('mousedown', function (evt) {
+    window.utils.mouseMoveHandler(evt, pinMain);
+    pinMain.addEventListener('mousemove', function () {
+
+      var pinMainCoords = {
+        x: pinMain.offsetLeft + PIN_MAIN_WIDTH / 2,
+        y: pinMain.offsetTop + PIN_MAIN_HEIGHT
+      };
+
+      pinMainAddress.value = 'x: ' + pinMainCoords.x + '; y: ' + pinMainCoords.y;
+    });
+  });
 
   var errorDataHandler = function (err) {
     dialogMain.innerHTML = err;

@@ -1,6 +1,12 @@
 'use strict';
 
 window.showCard = (function () {
+  var dialogMain = document.querySelector('.dialog');
+  var dialogTitle = dialogMain.querySelector('.dialog__title');
+
+  dialogTitle.addEventListener('mousedown', function (evt) {
+    window.utils.mouseMoveHandler(evt, dialogMain);
+  });
 
   var getLodgeType = function (data) {
     var lodgeType = data.offer.type;
@@ -90,7 +96,6 @@ window.showCard = (function () {
 
   var renderOpenedCard = function (element, data) {
 
-    var dialogTitle = element.querySelector('.dialog__title');
     dialogTitle.querySelector('img').src = data.author.avatar;
 
     var dialogPanel = element.querySelector('.dialog__panel');
