@@ -2,11 +2,22 @@
 
 window.showCard = (function () {
   var dialogMain = document.querySelector('.dialog');
+  var dialogPanel = dialogMain.querySelector('.dialog__panel');
   var dialogTitle = dialogMain.querySelector('.dialog__title');
+  var dialogClose = dialogMain.querySelector('.dialog__close');
 
   dialogTitle.addEventListener('mousedown', function (evt) {
     window.utils.mouseMoveHandler(evt, dialogMain);
   });
+
+  var dialogCloseHandler = function () {
+    dialogMain.style.display = 'none';
+    window.utils.setupARIA(dialogMain, 'aria-hidden', 'true');
+    window.utils.setupARIA(dialogClose, 'aria-pressed', 'true');
+    window.initializePins.deleteActivePin();
+  };
+
+  dialogClose.addEventListener('click', dialogCloseHandler);
 
   var getLodgeType = function (data) {
     var lodgeType = data.offer.type;
@@ -94,11 +105,10 @@ window.showCard = (function () {
     return fragment;
   };
 
-  var renderOpenedCard = function (element, data) {
+  var renderOpenedCard = function (data) {
 
     dialogTitle.querySelector('img').src = data.author.avatar;
 
-    var dialogPanel = element.querySelector('.dialog__panel');
     dialogPanel.querySelector('.lodge__title').textContent = data.offer.title;
     dialogPanel.querySelector('.lodge__address').textContent = data.offer.address;
     dialogPanel.querySelector('.lodge__price').innerHTML = data.offer.price + '<span style="font-family: \'PT Sans\', serif;">&#8381;</span>/ночь';
@@ -117,14 +127,20 @@ window.showCard = (function () {
 
   };
 
-  var dialogOpenHandler = function (element, data) {
+  var dialogOpenHandler = function (data) {
     if (data) {
-      renderOpenedCard(element, data);
-      element.style.display = 'block';
+      renderOpenedCard(data);
+      dialogMain.style.display = 'block';
     }
   };
 
-  return function (element, data) {
-    dialogOpenHandler(element, data);
+  return {
+    show: function (data) {
+      dialogOpenHandler(data);
+      window.utils.setupARIA(dialogMain, 'aria-hidden', 'false');
+      window.utils.setupARIA(dialogClose, 'aria-pressed', 'false');
+    },
+
+    dialogCloseHandler: dialogCloseHandler
   };
 })();

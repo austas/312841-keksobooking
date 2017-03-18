@@ -3,8 +3,6 @@
 window.initializePins = (function () {
 
   var tokyoPinMap = document.querySelector('.tokyo__pin-map');
-  var dialogMain = document.querySelector('.dialog');
-  var dialogClose = dialogMain.querySelector('.dialog__close');
   var filtersForm = document.querySelector('.tokyo__filters');
   var pinMain = document.querySelector('.pin__main');
   var pinMainAddress = document.querySelector('#address');
@@ -22,10 +20,8 @@ window.initializePins = (function () {
   var selectActivePin = function (evt, data) {
     deleteActivePin();
     evt.classList.add('pin--active');
-    window.showCard(dialogMain, data);
+    window.showCard.show(data);
     window.utils.setupARIA(evt, 'aria-pressed', 'true');
-    window.utils.setupARIA(dialogMain, 'aria-hidden', 'false');
-    window.utils.setupARIA(dialogClose, 'aria-pressed', 'false');
   };
 
   var deleteActivePin = function () {
@@ -34,13 +30,6 @@ window.initializePins = (function () {
       activePin.classList.remove('pin--active');
       window.utils.setupARIA(activePin, 'aria-pressed', 'false');
     }
-  };
-
-  var dialogCloseHandler = function () {
-    dialogMain.style.display = 'none';
-    window.utils.setupARIA(dialogMain, 'aria-hidden', 'true');
-    window.utils.setupARIA(dialogClose, 'aria-pressed', 'true');
-    deleteActivePin();
 
     if (typeof focusOn === 'function') {
       focusOn();
@@ -65,13 +54,11 @@ window.initializePins = (function () {
 
   var tokyoPinMapHandler = function (evt, data) {
     if (window.utils.isActivateEvent(evt)) {
-      window.initializePins(setFocusOnSelectedPin, evt, data);
+      window.initializePins.rememberFocus(setFocusOnSelectedPin, evt, data);
     } else if (window.utils.isEscEvent(evt)) {
-      dialogCloseHandler();
+      window.showCard.dialogCloseHandler();
     }
   };
-
-  dialogClose.addEventListener('click', dialogCloseHandler);
 
   var filtersFormHandler = function () {
     filteredApartments = window.filtersForm(allApartments);
@@ -120,7 +107,12 @@ window.initializePins = (function () {
   });
 
   var errorDataHandler = function (err) {
-    dialogMain.innerHTML = err;
+    var main = document.querySelector('.tokyo');
+    var dialogError = document.createElement('div');
+    dialogError.classList.add('dialog');
+    dialogError.style.display = 'block';
+    dialogError.innerHTML = '<h3>' + err + '</h3>';
+    main.appendChild(dialogError);
   };
 
   var onLoad = function (data) {
@@ -132,9 +124,11 @@ window.initializePins = (function () {
 
   window.load(DATA_URL, onLoad, errorDataHandler);
 
-  return function (cb, evt, data) {
-    pinTargetHandler(evt, data);
-    focusOn = cb;
+  return {
+    rememberFocus: function (cb, evt, data) {
+      pinTargetHandler(evt, data);
+      focusOn = cb;
+    },
+    deleteActivePin: deleteActivePin
   };
-
 })();
