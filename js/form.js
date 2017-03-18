@@ -4,6 +4,8 @@ window.noticeForm = (function () {
 
   var noticeForm = document.querySelector('.notice__form');
   var noticePrice = noticeForm.querySelector('#price');
+  // var noticeFormTitle = noticeForm.querySelector('#title');
+  // var noticeFormSubmit = noticeForm.querySelector('.form__submit');
   var selectedHouseType = noticeForm.elements.type;
   var selectedRoomNumbers = noticeForm.elements.roomNumber;
   var selectedCapacity = noticeForm.elements.capacity;
@@ -38,5 +40,11 @@ window.noticeForm = (function () {
   selectedTimeOut.addEventListener('change', function () {
     window.synchronizeFields(selectedTimeOut, selectedTimeIn, ['twelve', 'one', 'two'], ['twelve', 'one', 'two'], syncValues);
   });
+
+  var onFormSubmit = function () {
+    alert('Not sent');
+  };
+
+  return onFormSubmit;
 
 })();
