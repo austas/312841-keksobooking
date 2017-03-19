@@ -4,8 +4,9 @@ window.noticeForm = (function () {
 
   var noticeForm = document.querySelector('.notice__form');
   var noticePrice = noticeForm.querySelector('#price');
-  // var noticeFormTitle = noticeForm.querySelector('#title');
-  // var noticeFormSubmit = noticeForm.querySelector('.form__submit');
+  var noticeFormTitle = noticeForm.querySelector('#title');
+  var pinMainAddress = noticeForm.querySelector('#address');
+  var noticeFormDescription = noticeForm.querySelector('#description');
   var selectedHouseType = noticeForm.elements.type;
   var selectedRoomNumbers = noticeForm.elements.roomNumber;
   var selectedCapacity = noticeForm.elements.capacity;
@@ -41,10 +42,41 @@ window.noticeForm = (function () {
     window.synchronizeFields(selectedTimeOut, selectedTimeIn, ['twelve', 'one', 'two'], ['twelve', 'one', 'two'], syncValues);
   });
 
-  var onFormSubmit = function () {
-    alert('Not sent');
+  var userNotice = {
+    'author': {
+      'avatar': 'img/avatars/no-avatar.png'
+    },
+    'offer': {
+      'features': [],
+      'photos': ['img/NoPhoto.png']
+    }
   };
 
-  return onFormSubmit;
+  var onFormSubmit = function () {
+    window.initializePins.selectActivePin(window.initializePins.pinMain, userNotice);
+  };
+
+  var noticeFormChangeHandler = function () {
+    userNotice.offer.title = noticeFormTitle.value;
+    userNotice.offer.price = noticePrice.value;
+
+    userNotice.offer.address = pinMainAddress.value;
+    userNotice.offer.type = selectedHouseType.value;
+    userNotice.offer.rooms = selectedRoomNumbers.value;
+    userNotice.offer.guests = selectedCapacity.value;
+    userNotice.offer.checkin = selectedTimeIn.value;
+    userNotice.offer.checkout = selectedTimeOut.value;
+    userNotice.offer.description = noticeFormDescription.value;
+  };
+
+  noticeForm.addEventListener('change', noticeFormChangeHandler);
+  noticeForm.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+  });
+
+  return {
+    onFormSubmit: onFormSubmit,
+    pinMainAddress: pinMainAddress
+  };
 
 })();

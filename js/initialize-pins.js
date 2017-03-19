@@ -5,7 +5,6 @@ window.initializePins = (function () {
   var tokyoPinMap = document.querySelector('.tokyo__pin-map');
   var filtersForm = document.querySelector('.tokyo__filters');
   var pinMain = document.querySelector('.pin__main');
-  var pinMainAddress = document.querySelector('#address');
 
   var DATA_URL = 'https://intensive-javascript-server-pedmyactpq.now.sh/keksobooking/data';
   var MAX_NUMBER_OF_PINS_ON_START = 3;
@@ -102,7 +101,7 @@ window.initializePins = (function () {
         y: pinMain.offsetTop + PIN_MAIN_HEIGHT
       };
 
-      pinMainAddress.value = 'x: ' + pinMainCoords.x + '; y: ' + pinMainCoords.y;
+      window.noticeForm.pinMainAddress.value = 'x: ' + pinMainCoords.x + '; y: ' + pinMainCoords.y;
     });
   });
 
@@ -129,6 +128,9 @@ window.initializePins = (function () {
       pinTargetHandler(evt, data);
       focusOn = cb;
     },
-    deleteActivePin: deleteActivePin
+    deleteActivePin: deleteActivePin,
+    selectActivePin: selectActivePin,
+    pinMain: pinMain
   };
+
 })();
