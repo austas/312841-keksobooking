@@ -45,24 +45,26 @@ window.showCard = (function () {
 
     switch (rooms) {
       case 1:
-        roomsAndGuests = rooms + ' комната, для ';
+        roomsAndGuests = rooms + ' комната';
         break;
       case 2:
       case 3:
       case 4:
-        roomsAndGuests = rooms + ' комнаты, для ';
+        roomsAndGuests = rooms + ' комнаты';
         break;
       default:
-        roomsAndGuests = rooms + ' комнат, для ';
+        roomsAndGuests = rooms + ' комнат';
         break;
     }
 
     switch (guests) {
+      case 0:
+        break;
       case 1:
-        roomsAndGuests += guests + ' гостя';
+        roomsAndGuests += ', для ' + guests + ' гостя';
         break;
       default:
-        roomsAndGuests += guests + ' гостей';
+        roomsAndGuests += ', для ' + guests + ' гостей';
         break;
     }
 

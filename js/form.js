@@ -27,19 +27,19 @@ window.noticeForm = (function () {
   });
 
   selectedRoomNumbers.addEventListener('change', function () {
-    window.synchronizeFields(selectedRoomNumbers, selectedCapacity, ['one_room', 'two_rooms', 'hundred_rooms'], ['not_for_guests', 'for_three_guests', 'for_three_guests'], syncValues);
+    window.synchronizeFields(selectedRoomNumbers, selectedCapacity, ['1', '2', '100'], ['0', '3', '3'], syncValues);
   });
 
   selectedCapacity.addEventListener('change', function () {
-    window.synchronizeFields(selectedCapacity, selectedRoomNumbers, ['not_for_guests', 'for_three_guests', 'for_three_guests'], ['one_room', 'two_rooms', 'hundred_rooms'], syncValues);
+    window.synchronizeFields(selectedCapacity, selectedRoomNumbers, ['0', '3', '3'], ['1', '2', '100'], syncValues);
   });
 
   selectedTimeIn.addEventListener('change', function () {
-    window.synchronizeFields(selectedTimeIn, selectedTimeOut, ['twelve', 'one', 'two'], ['twelve', 'one', 'two'], syncValues);
+    window.synchronizeFields(selectedTimeIn, selectedTimeOut, ['12:00', '13:00', '14:00'], ['12:00', '13:00', '14:00'], syncValues);
   });
 
   selectedTimeOut.addEventListener('change', function () {
-    window.synchronizeFields(selectedTimeOut, selectedTimeIn, ['twelve', 'one', 'two'], ['twelve', 'one', 'two'], syncValues);
+    window.synchronizeFields(selectedTimeOut, selectedTimeIn, ['12:00', '13:00', '14:00'], ['12:00', '13:00', '14:00'], syncValues);
   });
 
   var onFormSubmit = function () {
@@ -66,8 +66,8 @@ window.noticeForm = (function () {
     userNotice.location.y = window.initializePins.pinMainCoords.y;
 
     userNotice.offer.type = selectedHouseType.value;
-    userNotice.offer.rooms = selectedRoomNumbers.value;
-    userNotice.offer.guests = selectedCapacity.value;
+    userNotice.offer.rooms = Number(selectedRoomNumbers.value);
+    userNotice.offer.guests = Number(selectedCapacity.value);
     userNotice.offer.checkin = selectedTimeIn.value;
     userNotice.offer.checkout = selectedTimeOut.value;
     userNotice.offer.description = noticeFormDescription.value;
