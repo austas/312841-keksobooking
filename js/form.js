@@ -42,33 +42,22 @@ window.noticeForm = (function () {
     window.synchronizeFields(selectedTimeOut, selectedTimeIn, ['twelve', 'one', 'two'], ['twelve', 'one', 'two'], syncValues);
   });
 
-  var userNotice = {
-    'author': {
-      'avatar': 'img/avatars/no-avatar.png'
-    },
-    'offer': {
-      'features': [],
-      'photos': ['img/NoPhoto.png']
-    },
-    'location': {
-      'x': null,
-      'y': null
-    }
-  };
-
   var onFormSubmit = function () {
-    window.render.setPinCoords(window.initializePins.pinMainCoords.element, 600, 300);
-    pinMainAddress.value = '';
 
-    window.initializePins.allApartments.push(userNotice);
-    var userPin = window.render.pin(userNotice, window.initializePins.filteredApartments.length);
-    window.initializePins.tokyoPinMap.appendChild(userPin);
+    var userNotice = {
+      'author': {
+        'avatar': 'img/avatars/no-avatar.png'
+      },
+      'offer': {
+        'features': [],
+        'photos': ['img/NoPhoto.png']
+      },
+      'location': {
+        'x': null,
+        'y': null
+      }
+    };
 
-    window.initializePins.filteredApartments.push(userNotice);
-    window.initializePins.selectActivePin(userPin, userNotice);
-  };
-
-  var noticeFormChangeHandler = function () {
     userNotice.offer.title = noticeFormTitle.value;
     userNotice.offer.price = noticePrice.value;
 
@@ -82,11 +71,24 @@ window.noticeForm = (function () {
     userNotice.offer.checkin = selectedTimeIn.value;
     userNotice.offer.checkout = selectedTimeOut.value;
     userNotice.offer.description = noticeFormDescription.value;
+
+    window.render.setPinCoords(window.initializePins.pinMainCoords.element, 600, 300);
+    pinMainAddress.value = '';
+    noticeFormTitle.value = '';
+    noticePrice.value = '';
+
+    window.initializePins.allApartments.push(userNotice);
+    window.initializePins.filteredApartments.push(userNotice);
+    var userPin = window.render.pin(userNotice, [window.initializePins.filteredApartments.length - 1]);
+    window.initializePins.tokyoPinMap.appendChild(userPin);
+
+    window.initializePins.filteredApartments.push(userNotice);
+    window.initializePins.selectActivePin(userPin, userNotice);
   };
 
-  noticeForm.addEventListener('change', noticeFormChangeHandler);
   noticeForm.addEventListener('submit', function (evt) {
     evt.preventDefault();
+    onFormSubmit();
   });
 
   return {

@@ -13,6 +13,7 @@ window.initializePins = (function () {
 
   var selectedPin = null;
   var focusOn = null;
+  var pinMainCoords;
   var allApartments;
   var filteredApartments;
 
@@ -100,7 +101,7 @@ window.initializePins = (function () {
 
     pinMain.addEventListener('mousemove', function () {
 
-      var pinMainCoords = {
+      pinMainCoords = {
         x: pinMain.offsetLeft + PIN_MAIN_WIDTH / 2,
         y: pinMain.offsetTop + PIN_MAIN_HEIGHT,
         element: pinMain
@@ -144,7 +145,7 @@ window.initializePins = (function () {
     allApartments: allApartments,
     filteredApartments: filteredApartments,
     tokyoPinMap: tokyoPinMap,
-    pinMainCoords: null
+    pinMainCoords: pinMainCoords
   };
 
 })();
