@@ -49,11 +49,22 @@ window.noticeForm = (function () {
     'offer': {
       'features': [],
       'photos': ['img/NoPhoto.png']
+    },
+    'location': {
+      'x': null,
+      'y': null
     }
   };
 
   var onFormSubmit = function () {
-    window.initializePins.selectActivePin(window.initializePins.pinMain, userNotice);
+    window.render.setPinCoords(window.initializePins.pinMainCoords.element, 600, 300);
+
+    window.initializePins.allApartments.push(userNotice);
+    var userPin = window.render.pin(userNotice, window.initializePins.filteredApartments.length);
+    window.initializePins.tokyoPinMap.appendChild(userPin);
+
+    window.initializePins.filteredApartments.push(userNotice);
+    window.initializePins.selectActivePin(userPin, userNotice);
   };
 
   var noticeFormChangeHandler = function () {
@@ -61,6 +72,9 @@ window.noticeForm = (function () {
     userNotice.offer.price = noticePrice.value;
 
     userNotice.offer.address = pinMainAddress.value;
+    userNotice.location.x = window.initializePins.pinMainCoords.x;
+    userNotice.location.y = window.initializePins.pinMainCoords.y;
+
     userNotice.offer.type = selectedHouseType.value;
     userNotice.offer.rooms = selectedRoomNumbers.value;
     userNotice.offer.guests = selectedCapacity.value;

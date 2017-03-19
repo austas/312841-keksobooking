@@ -18,12 +18,16 @@ window.render = (function () {
 
       var coordsX = pin.location.x - PIN_WIDTH / 2;
       var coordsY = pin.location.y - PIN_HEIGHT;
-      newElement.style = ['left: ' + coordsX.toString() + 'px;top: ' + coordsY.toString() + 'px'];
+      window.render.setPinCoords(newElement, coordsX, coordsY);
 
       var newAvatar = newElement.children[0];
       newAvatar.src = pin.author.avatar;
 
       return newElement;
+    },
+
+    setPinCoords: function (element, coordsX, coordsY) {
+      element.style = ['left: ' + coordsX.toString() + 'px;top: ' + coordsY.toString() + 'px'];
     },
 
     feature: function (lodgeName) {

@@ -5,6 +5,8 @@ window.showCard = (function () {
   var dialogPanel = dialogMain.querySelector('.dialog__panel');
   var dialogTitle = dialogMain.querySelector('.dialog__title');
   var dialogClose = dialogMain.querySelector('.dialog__close');
+  var lodgeFeatures = dialogPanel.querySelector('.lodge__features');
+  var lodgePhotos = dialogPanel.querySelector('.lodge__photos');
 
   dialogTitle.addEventListener('mousedown', function (evt) {
     window.utils.mouseMoveHandler(evt, dialogMain);
@@ -117,26 +119,18 @@ window.showCard = (function () {
     dialogPanel.querySelector('.lodge__checkin-time').textContent = getCheckinCheckoutTime(data);
     dialogPanel.querySelector('.lodge__description').textContent = data.offer.description;
 
-    var lodgeFeatures = dialogPanel.querySelector('.lodge__features');
     lodgeFeatures.textContent = '';
     lodgeFeatures.appendChild(getLodgeFeatures(lodgeFeatures, data));
 
-    var lodgePhotos = dialogPanel.querySelector('.lodge__photos');
     lodgePhotos.textContent = '';
     lodgePhotos.appendChild(getLodgePhotos(lodgePhotos, data));
 
   };
 
-  var dialogOpenHandler = function (data) {
-    if (data) {
-      renderOpenedCard(data);
-      dialogMain.style.display = 'block';
-    }
-  };
-
   return {
     show: function (data) {
-      dialogOpenHandler(data);
+      renderOpenedCard(data);
+      dialogMain.style.display = 'block';
       window.utils.setupARIA(dialogMain, 'aria-hidden', 'false');
       window.utils.setupARIA(dialogClose, 'aria-pressed', 'false');
     },
