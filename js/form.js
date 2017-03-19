@@ -58,6 +58,7 @@ window.noticeForm = (function () {
 
   var onFormSubmit = function () {
     window.render.setPinCoords(window.initializePins.pinMainCoords.element, 600, 300);
+    pinMainAddress.value = '';
 
     window.initializePins.allApartments.push(userNotice);
     var userPin = window.render.pin(userNotice, window.initializePins.filteredApartments.length);

@@ -97,6 +97,7 @@ window.initializePins = (function () {
 
   pinMain.addEventListener('mousedown', function (evt) {
     window.utils.mouseMoveHandler(evt, pinMain);
+
     pinMain.addEventListener('mousemove', function () {
 
       var pinMainCoords = {
@@ -105,8 +106,12 @@ window.initializePins = (function () {
         element: pinMain
       };
 
-      window.noticeForm.pinMainAddress.value = 'x: ' + pinMainCoords.x + '; y: ' + pinMainCoords.y;
+      // window.noticeForm.pinMainAddress.value = 'x: ' + pinMainCoords.x + '; y: ' + pinMainCoords.y;
       window.initializePins.pinMainCoords = pinMainCoords;
+    });
+
+    pinMain.addEventListener('mouseup', function () {
+      window.noticeForm.pinMainAddress.value = window.addressList();
     });
   });
 
